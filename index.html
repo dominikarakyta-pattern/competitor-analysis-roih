@@ -104,6 +104,8 @@ td:not(:first-child) { text-align: center; }
 .bT  { background: #dcfce7; color: #15803d; }
 .bYB { background: #fef3c7; color: #92400e; }
 .bNB { background: #ffedd5; color: #c2410c; }
+.badge-link { text-decoration: none; }
+.badge-link:hover .b { opacity: 0.8; text-decoration: underline; cursor: pointer; }
 .bN  { background: #f1f5f9; color: #94a3b8; }
 .bQ  { background: #eff6ff; color: #3b82f6; }
 .bA  { background: #e0f2fe; color: #0369a1; }
@@ -218,6 +220,36 @@ const CORRECTIONS = {
   'Dashboard: wasted spend / poor performers':{ hu:'YES,BUT', ma:'YES,BUT' },
   'Max renders per creative':                 { rh:'Unlimited\n(On-demand CPV)', sm:'On-demand\n(Meta co-dev, Oct 2025)', ma:'No stated\nlimit' },
 };
+
+// Source URLs — only where we have a specific evidence page
+// key: feature name → {competitor_key: url}
+const FEATURE_SOURCES = {
+  'Filter products — Meta metrics':             { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights', ma:'https://www.marpipe.com/product-optimizations' },
+  'Filter products — Google metrics':           { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights' },
+  'Filter products — GA4 metrics':             { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights' },
+  'Analytical tools for product analysis':      { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights', ma:'https://www.marpipe.com/product-optimizations' },
+  'Product performance per campaign':           { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights' },
+  'Dashboard: wasted spend / poor performers':  { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights', ma:'https://www.marpipe.com/product-optimizations' },
+  'Native Integration — Snap':                  { hu:'https://www.hunchads.com/product-roadmap' },
+  'Native Integration — TikTok':               { co:'https://academy.confect.io', sm:'https://www.smartly.io', ad:'https://www.adsmurai.com/en/product-updates' },
+  'Max renders per creative':                   { sm:'https://www.smartly.io' },
+  'TikTok Video Catalog Ads output':            { co:'https://academy.confect.io', sm:'https://www.smartly.io', ad:'https://www.adsmurai.com/en/product-updates' },
+  'Creative collaboration / review tools':      { hu:'https://www.hunchads.com/product-roadmap' },
+  'Pre-flight AI creative analysis\n(predict attention / engagement before launch)': { sm:'https://www.smartly.io' },
+  'Post-flight creative AI insights\n(theme analysis, performance drivers)':         { sm:'https://www.smartly.io' },
+  'Multivariate creative testing\n(automated A/B across all combos)':               { ma:'https://www.marpipe.com' },
+  'Starting price': {
+    hu:'https://www.g2.com/products/hunch/pricing',
+    sm:'https://www.smartly.io/pricing',
+    co:'https://confect.io/pricing',
+    ad:'https://www.adsmurai.com/en/pricing',
+    ma:'https://www.marpipe.com/pricing',
+  },
+};
+
+function getSource(feature, key) {
+  return (FEATURE_SOURCES[feature] || {})[key] || null;
+}
 
 // ─────────────────── EMBEDDED DATA ───────────────────
 // week: 'this' = dated May 4–11 2026  |  'before' = older findings
@@ -436,14 +468,18 @@ let intelUrgency = 'all';
 let matrixSections = [];
 
 // ─────────────────── BADGE HELPER ───────────────────
-function badge(v, corrected) {
+function badge(v, corrected, url) {
   const s = (v||'').trim().toUpperCase().replace(/[\s,]+/g,'');
   const map = {'TRUE':'bT TRUE','YESBUT':'bYB YES,BUT','NOBUT':'bNB NO,BUT','NO':'bN NO','?':'bQ ?','AUTOMATIC':'bA AUTO','MANUAL':'bM MANUAL','YES':'bT YES'};
   const hit = map[s];
   if (hit) {
     const [cls,label] = hit.split(' ');
     const extra = corrected ? ' corrected' : '';
-    return `<span class="b ${cls}${extra}" ${corrected?'title="Verified this session — not yet in Drive"':''}>${label}</span>`;
+    const span = `<span class="b ${cls}${extra}">${label}</span>`;
+    if (url && (cls==='bT'||cls==='bYB'||cls==='bNB')) {
+      return `<a href="${url}" target="_blank" rel="noopener" class="badge-link" title="View source">` + span + `</a>`;
+    }
+    return span;
   }
   return `<span class="b bS">${v}</span>`;
 }
@@ -644,13 +680,13 @@ function renderMatrix() {
   for (const sec of filtered) {
     html += `<tr class="cat-row"><td colspan="7">${sec.name}</td></tr>`;
     for (const r of sec.rows) {
-      html += `<tr><td>${r.f}</td>
-        <td>${badge(r.rh)}</td>
-        <td>${badge(r.hu, !!r._corr.hu)}</td>
-        <td>${badge(r.sm)}</td>
-        <td>${badge(r.ma, !!r._corr.ma)}</td>
-        <td>${badge(r.co)}</td>
-        <td>${badge(r.ad)}</td>
+      html += `<tr><td>${r.f.replace(/\n/g,'<br><span style="font-size:10px;color:#94a3b8">')+(r.f.includes('\n')?'</span>':'')}</td>
+        <td>${badge(r.rh, false,          getSource(r.f,'rh'))}</td>
+        <td>${badge(r.hu, !!r._corr.hu,  getSource(r.f,'hu'))}</td>
+        <td>${badge(r.sm, false,          getSource(r.f,'sm'))}</td>
+        <td>${badge(r.ma, !!r._corr.ma,  getSource(r.f,'ma'))}</td>
+        <td>${badge(r.co, false,          getSource(r.f,'co'))}</td>
+        <td>${badge(r.ad, false,          getSource(r.f,'ad'))}</td>
       </tr>`;
     }
   }
@@ -661,7 +697,8 @@ function renderMatrix() {
     <span class="b bYB" style="margin:0 4px">YES,BUT</span> Partial / caveats &nbsp;
     <span class="b bNB" style="margin:0 4px">NO,BUT</span> Workaround exists &nbsp;
     <span class="b bN" style="margin:0 4px">NO</span> Not supported &nbsp;
-    <span class="b bQ" style="margin:0 4px">?</span> Unverified
+    <span class="b bQ" style="margin:0 4px">?</span> Unverified &nbsp;
+    <span style="color:#2563eb">·</span> Underlined badges link to source evidence
   </div>`;
   wrap.innerHTML = html;
 }
