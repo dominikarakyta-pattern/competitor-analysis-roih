@@ -362,33 +362,32 @@ function parseCSVText(text) {
   });
 }
 
-async function fetchCSV(url, bustCache = false) {
-  // Append a timestamp so browsers and CDN proxies never serve a stale copy
-  const finalUrl = bustCache ? `${url}${url.includes('?') ? '&' : '?'}_t=${Date.now()}` : url;
-  const res = await fetch(finalUrl, { cache: 'no-store' });
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+async function fetchCSV(url) {
+  // Always append a unique timestamp so the browser and any CDN proxy
+  // treat every request as brand-new and never serve a cached copy.
+  const bustUrl = `${url}${url.includes('?') ? '&' : '?'}_t=${Date.now()}`;
+  const res = await fetch(bustUrl, {
+    cache: 'no-store',   // never read from or write to the browser cache
+    headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+    },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const text = await res.text();
+  if (!text.trim()) throw new Error('Empty response');
   return parseCSVText(text);
 }
 
-// Try the Google Sheets URL first (always fresh); fall back to the local file on any error.
+// Fetch from Google Sheets only. No local fallback — local files are
+// frozen at creation time and would silently show stale data on reload.
 async function fetchCSVWithFallback(name) {
   const remoteUrl = CSV_URLS[name];
-  const localUrl  = CSV_LOCAL[name];
-  const isPlaceholder = remoteUrl.startsWith('PASTE_');
-
-  if (!isPlaceholder) {
-    try {
-      const data = await fetchCSV(remoteUrl, true); // bust cache on every load
-      if (data.length > 0) return { data, source: 'sheets' };
-    } catch (e) {
-      console.warn(`Google Sheets fetch failed for "${name}", trying local fallback:`, e.message);
-    }
+  if (remoteUrl.startsWith('PASTE_')) {
+    throw new Error(`"${name}" Google Sheets URL not configured yet`);
   }
-
-  // Local fallback (no cache-busting needed for local files)
-  const data = await fetchCSV(localUrl, false);
-  return { data, source: 'local' };
+  const data = await fetchCSV(remoteUrl);
+  return { data, source: 'sheets' };
 }
 
 // ─── LOAD ALL DATA ────────────────────────────────────────────────────────
@@ -412,10 +411,6 @@ async function loadAllData() {
     const intelRows    = intelRes.data;
     const overviewRows = overviewRes.data;
     const sourcesRows  = sourcesRes.data;
-
-    // Determine whether data came from Sheets or local files
-    const fromSheets = [matrixRes, intelRes, overviewRes, sourcesRes].every(r => r.source === 'sheets');
-    const fromLocal  = [matrixRes, intelRes, overviewRes, sourcesRes].every(r => r.source === 'local');
 
     // ── Parse matrix ──
     const sectionMap = {};
@@ -494,22 +489,20 @@ async function loadAllData() {
     renderMatrix();
 
     // ── Update status ──
-    const d = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    if (fromSheets) {
-      status.innerHTML = `<span style="color:#16a34a">✓</span> Live from Google Sheets · Loaded ${d}`;
-      badge.textContent = `✓ Updated ${d}`;
-    } else if (fromLocal) {
-      status.innerHTML = `<span style="color:#16a34a">✓</span> Local data (preview mode) · ${d}`;
-      badge.textContent = `✓ Local data`;
-    } else {
-      status.innerHTML = `<span style="color:#d97706">⚠️</span> Mixed sources · ${d}`;
-      badge.textContent = `⚠️ Mixed sources`;
-    }
+    const d = new Date().toLocaleString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric',
+      hour: '2-digit', minute: '2-digit',
+    });
+    status.innerHTML = `<span style="color:#16a34a">✓</span> Live from Google Sheets · Fetched ${d}`;
+    badge.textContent = `✓ Fetched ${d}`;
     badge.className = 'sync-badge ok';
 
   } catch (err) {
     console.error('Data load error:', err);
-    status.innerHTML = `<span style="color:#dc2626">✗</span> Failed to load: ${err.message || err}`;
+    status.innerHTML = `
+      <span style="color:#dc2626">✗</span> Failed to load from Google Sheets: ${err.message || err}
+      &nbsp;<button onclick="loadAllData()" style="font-size:10px;padding:2px 8px;border:1px solid #dc2626;
+        color:#dc2626;background:#fff;border-radius:4px;cursor:pointer;margin-left:6px">↻ Retry</button>`;
     badge.textContent = '✗ Load failed';
     badge.className = 'sync-badge err';
   }
