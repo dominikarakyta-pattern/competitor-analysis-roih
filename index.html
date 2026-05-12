@@ -362,14 +362,16 @@ function parseCSVText(text) {
   });
 }
 
-async function fetchCSV(url) {
-  const res = await fetch(url);
+async function fetchCSV(url, bustCache = false) {
+  // Append a timestamp so browsers and CDN proxies never serve a stale copy
+  const finalUrl = bustCache ? `${url}${url.includes('?') ? '&' : '?'}_t=${Date.now()}` : url;
+  const res = await fetch(finalUrl, { cache: 'no-store' });
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
   const text = await res.text();
   return parseCSVText(text);
 }
 
-// Try the Google Sheets URL first; fall back to the local file on any error.
+// Try the Google Sheets URL first (always fresh); fall back to the local file on any error.
 async function fetchCSVWithFallback(name) {
   const remoteUrl = CSV_URLS[name];
   const localUrl  = CSV_LOCAL[name];
@@ -377,15 +379,15 @@ async function fetchCSVWithFallback(name) {
 
   if (!isPlaceholder) {
     try {
-      const data = await fetchCSV(remoteUrl);
+      const data = await fetchCSV(remoteUrl, true); // bust cache on every load
       if (data.length > 0) return { data, source: 'sheets' };
     } catch (e) {
       console.warn(`Google Sheets fetch failed for "${name}", trying local fallback:`, e.message);
     }
   }
 
-  // Local fallback
-  const data = await fetchCSV(localUrl);
+  // Local fallback (no cache-busting needed for local files)
+  const data = await fetchCSV(localUrl, false);
   return { data, source: 'local' };
 }
 
