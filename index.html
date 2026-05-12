@@ -124,11 +124,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .ov-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
 .ov-sect-head { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid #f1f5f9; }
 .wins .ov-sect-head { color: #15803d; }
-.loses .ov-sect-head { color: #dc2626; }
+.loses .ov-sect-head { color: #d97706; }
 .ov-li { font-size: 11px; color: #475569; padding: 3px 0 3px 12px; position: relative; line-height: 1.45; }
 .ov-li::before { content: ''; position: absolute; left: 3px; top: 8px; width: 5px; height: 5px; border-radius: 50%; }
 .wins .ov-li::before { background: #16a34a; }
-.loses .ov-li::before { background: #dc2626; }
+.loses .ov-li::before { background: #d97706; }
 .ov-news { font-size: 11px; color: #475569; background: #f4f7fc; border-radius: 8px; padding: 9px 12px; line-height: 1.5; border-top: 1px solid #e4eaf6; margin-top: 10px; }
 .news-label { font-size: 9px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; }
 
@@ -181,10 +181,8 @@ td:not(:first-child) { text-align: center; }
 .bQ  { background: #eff6ff; color: #3b82f6; }
 .bA  { background: #e0f2fe; color: #0369a1; }
 .bM  { background: #f3e8ff; color: #7e22ce; }
-.bS  { background: #f4f7fc; color: #64748b; font-size: 9px; max-width: 80px; line-height: 1.2; padding: 2px 5px; }
+.bS  { background: #f4f7fc; color: #64748b; font-size: 9px; max-width: 80px; line-height: 1.2; padding: 2px 5px; white-space: normal; }
 .bV  { background: #ecfdf5; color: #059669; }
-.corrected { position: relative; }
-.corrected::after { content: '✓'; position: absolute; top: -3px; right: -3px; font-size: 8px; color: #15803d; }
 
 /* SOURCES */
 .src-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px,1fr)); gap: 14px; }
@@ -215,7 +213,6 @@ td:not(:first-child) { text-align: center; }
   </div>
 
   <nav class="sidebar-nav">
-    <!-- ── Tool: Competitor Analysis ── -->
     <div class="nav-tool">
       <div class="nav-tool-label">🥊 Competitor Analysis</div>
       <button class="nav-item on" data-title="Competitive Overview" onclick="go('ov', this)">
@@ -231,19 +228,11 @@ td:not(:first-child) { text-align: center; }
         <span class="ni">🔗</span> Sources
       </button>
     </div>
-
     <div class="nav-divider"></div>
-
-    <!--
-      ── HOW TO ADD A NEW TOOL ──
-      Copy the block above, give it a new nav-tool-label,
-      point each nav-item to a new panel-id,
-      and add the matching panel inside .content below.
-    -->
   </nav>
 
   <div class="sidebar-footer">
-    <span id="syncBadge" class="sync-badge">Checking…</span>
+    <span id="syncBadge" class="sync-badge">Loading data…</span>
   </div>
 </div>
 
@@ -258,7 +247,7 @@ td:not(:first-child) { text-align: center; }
       <span class="page-tool" id="pageTool">Competitor Analysis</span>
     </div>
     <div class="topbar-right">
-      <button class="reload-btn" id="reloadBtn" onclick="loadMatrix()">↻ Reload data</button>
+      <button class="reload-btn" id="reloadBtn" onclick="loadAllData()">↻ Reload data</button>
     </div>
   </div>
 
@@ -271,14 +260,9 @@ td:not(:first-child) { text-align: center; }
 
     <!-- PANEL 2: WEEKLY INTEL -->
     <div id="panel-intel" class="panel">
-      <div class="filters">
+      <div class="filters" id="intelFilters">
         <span class="flabel">Competitor</span>
-        <span class="chip on" onclick="filterIntel(this,'comp','all')">All</span>
-        <span class="chip" onclick="filterIntel(this,'comp','Hunch')">Hunch</span>
-        <span class="chip" onclick="filterIntel(this,'comp','Smartly')">Smartly</span>
-        <span class="chip" onclick="filterIntel(this,'comp','Marpipe')">Marpipe</span>
-        <span class="chip" onclick="filterIntel(this,'comp','Confect.io')">Confect.io</span>
-        <span class="chip" onclick="filterIntel(this,'comp','AdSamurai')">AdSamurai</span>
+        <span id="intelCompChips"><span class="chip on" onclick="filterIntel(this,'comp','all')">All</span></span>
         <div class="sep"></div>
         <span class="flabel">Urgency</span>
         <span class="chip on" onclick="filterIntel(this,'urg','all')">All</span>
@@ -292,18 +276,12 @@ td:not(:first-child) { text-align: center; }
 
     <!-- PANEL 3: FEATURE MATRIX -->
     <div id="panel-matrix" class="panel">
-      <div class="filters">
+      <div class="filters" id="matrixFilters">
         <span class="flabel">Category</span>
-        <span class="chip on" onclick="filterMatrix(this,'all')">All</span>
-        <span class="chip" onclick="filterMatrix(this,'PPM')">PPM</span>
-        <span class="chip" onclick="filterMatrix(this,'Integrations')">Integrations</span>
-        <span class="chip" onclick="filterMatrix(this,'Image')">Image Templates</span>
-        <span class="chip" onclick="filterMatrix(this,'Video')">Video / CPV</span>
-        <span class="chip" onclick="filterMatrix(this,'AI')">AI & Dynamic</span>
-        <span class="chip" onclick="filterMatrix(this,'Pricing')">Pricing</span>
+        <span id="matrixCatChips"><span class="chip on" onclick="filterMatrix(this,'all')">All</span></span>
       </div>
       <div class="matrix-outer">
-        <div class="matrix-status" id="matrixStatus"><span class="spinner"></span> Loading…</div>
+        <div class="matrix-status" id="matrixStatus"><span class="spinner"></span> Loading from Google Sheets…</div>
         <div class="matrix-scroll"><div id="matrixWrap"></div></div>
       </div>
     </div>
@@ -316,342 +294,290 @@ td:not(:first-child) { text-align: center; }
       </div>
     </div>
 
-    <!--
-      ── FUTURE TOOL PANELS GO HERE ──
-      Each new tool gets its own set of panel divs.
-      Add matching nav-items to the sidebar above.
-    -->
-
   </div><!-- /content -->
 </div><!-- /main -->
 
+<!-- PapaParse for reliable CSV parsing -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
 <script>
-// ─────────────────── CONFIG ───────────────────
-const BUILT_DATE = new Date('2026-05-12T14:00:00Z');
+// ═══════════════════════════════════════════════════════════════════════════
+//  ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗
+// ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝
+// ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗
+// ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║
+// ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝
+//  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝
+//
+// HOW TO CONNECT YOUR GOOGLE SHEETS:
+// ─────────────────────────────────────────────────────────────────────────
+// 1. Open your Google Sheet
+// 2. For EACH tab (Matrix, Intel, Overview, Sources):
+//    a. Go to File → Share → Publish to web
+//    b. Select the specific sheet tab from the dropdown
+//    c. Choose "Comma-separated values (.csv)" as the format
+//    d. Click "Publish" and copy the URL
+// 3. Paste each URL in the CSV_URLS object below
+// 4. Commit your index.html to GitHub — the page fetches live data on every load
+// ─────────────────────────────────────────────────────────────────────────
 
-// Corrections confirmed this session (applied on top of Drive data)
-const CORRECTIONS = {
-  'Filter products — Meta metrics':           { hu:'YES,BUT', ma:'YES,BUT' },
-  'Analytical tools for product analysis':    { hu:'YES,BUT', ma:'YES,BUT' },
-  'Product performance per campaign':         { hu:'YES,BUT' },
-  'Dashboard: wasted spend / poor performers':{ hu:'YES,BUT', ma:'YES,BUT' },
-  'Max renders per creative':                 { rh:'Unlimited\n(On-demand CPV)', sm:'On-demand\n(Meta co-dev, Oct 2025)', ma:'No stated\nlimit' },
+const CSV_URLS = {
+  matrix:   'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmGtSGM_4tlLeMWFfBJ2faQDlm4JyXRmitVhslNc5z3QBfNJFg3zS-vn5Fz5dgQGxLCSqyvyUmqxn2/pub?gid=400335014&single=true&output=csv',
+  intel:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmGtSGM_4tlLeMWFfBJ2faQDlm4JyXRmitVhslNc5z3QBfNJFg3zS-vn5Fz5dgQGxLCSqyvyUmqxn2/pub?gid=986671215&single=true&output=csv',
+  overview: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmGtSGM_4tlLeMWFfBJ2faQDlm4JyXRmitVhslNc5z3QBfNJFg3zS-vn5Fz5dgQGxLCSqyvyUmqxn2/pub?gid=209443116&single=true&output=csv',
+  sources:  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmGtSGM_4tlLeMWFfBJ2faQDlm4JyXRmitVhslNc5z3QBfNJFg3zS-vn5Fz5dgQGxLCSqyvyUmqxn2/pub?gid=1810612015&single=true&output=csv',
 };
 
-// Source URLs — only where we have a specific evidence page
-// key: feature name → {competitor_key: url}
-const FEATURE_SOURCES = {
-  'Filter products — Meta metrics':             { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights', ma:'https://www.marpipe.com/product-optimizations' },
-  'Filter products — Google metrics':           { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights' },
-  'Filter products — GA4 metrics':             { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights' },
-  'Analytical tools for product analysis':      { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights', ma:'https://www.marpipe.com/product-optimizations' },
-  'Product performance per campaign':           { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights' },
-  'Dashboard: wasted spend / poor performers':  { hu:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights', ma:'https://www.marpipe.com/product-optimizations' },
-  'Native Integration — Snap':                  { hu:'https://www.hunchads.com/product-roadmap' },
-  'Native Integration — TikTok':               { co:'https://academy.confect.io', sm:'https://www.smartly.io', ad:'https://www.adsmurai.com/en/product-updates' },
-  'Max renders per creative':                   { sm:'https://www.smartly.io' },
-  'TikTok Video Catalog Ads output':            { co:'https://academy.confect.io', sm:'https://www.smartly.io', ad:'https://www.adsmurai.com/en/product-updates' },
-  'Creative collaboration / review tools':      { hu:'https://www.hunchads.com/product-roadmap' },
-  'Pre-flight AI creative analysis\n(predict attention / engagement before launch)': { sm:'https://www.smartly.io' },
-  'Post-flight creative AI insights\n(theme analysis, performance drivers)':         { sm:'https://www.smartly.io' },
-  'Multivariate creative testing\n(automated A/B across all combos)':               { ma:'https://www.marpipe.com' },
-  'Starting price': {
-    hu:'https://www.g2.com/products/hunch/pricing',
-    sm:'https://www.smartly.io/pricing',
-    co:'https://confect.io/pricing',
-    ad:'https://www.adsmurai.com/en/pricing',
-    ma:'https://www.marpipe.com/pricing',
-  },
+// Local CSV fallback paths (used when Google Sheets can't be reached,
+// e.g. in local preview). Commit the data/ folder alongside index.html
+// to enable this fallback.
+const CSV_LOCAL = {
+  matrix:   './data/matrix.csv',
+  intel:    './data/intel.csv',
+  overview: './data/overview.csv',
+  sources:  './data/sources.csv',
 };
 
-function getSource(feature, key) {
-  return (FEATURE_SOURCES[feature] || {})[key] || null;
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── STATE ───────────────────────────────────────────────────────────────
+let INTEL          = [];
+let OVERVIEW       = [];
+let SOURCES        = [];
+let matrixSections = [];
+let activeCat      = 'all';
+let intelComp      = 'all';
+let intelUrgency   = 'all';
+
+// ─── CSV FETCH ────────────────────────────────────────────────────────────
+// Fetches a URL and parses it as CSV, returning an array of row objects.
+function parseCSVText(text) {
+  return new Promise((resolve, reject) => {
+    Papa.parse(text, {
+      header: true,
+      skipEmptyLines: true,
+      complete: result => resolve(result.data),
+      error: reject,
+    });
+  });
 }
 
-// ─────────────────── EMBEDDED DATA ───────────────────
-// week: 'this' = dated May 5–12 2026  |  'before' = older findings
-const INTEL = [
-  // ── THIS WEEK (May 5–12 2026) ──
-  {week:'this', c:'Smartly', cat:'🚨 Acquisition — INCRMNTAL (AI Incrementality Measurement)', u:'urgent',
-   date:'May 8, 2026',
-   f:"Smartly's acquisition of INCRMNTAL closed ~May 8, 2026 (LOI signed March 16). INCRMNTAL delivers real-time incrementality measurement across channels — without user-level data or pausing campaigns. Combined with Smartly's platform: closed-loop creative + measurement + optimization that no competitor currently matches. Sales note: Smartly can now offer enterprise customers a story ROI Hunter cannot match today. Monitor whether this becomes a decision criterion in enterprise deals where Smartly overlaps.",
-   src:'BusinessWire · March 16 / closed May 8, 2026', url:'https://www.businesswire.com/news/home/20260316113888/en/Smartly-Signs-Letter-of-Intent-to-Acquire-INCRMNTAL'},
-  {week:'this', c:'Marpipe',  cat:'🆕 Realtime Social Proof — Star Ratings on Catalog Ads', u:'watch',
-   date:'May 6, 2026',
-   f:"Marpipe launched Realtime Social Proof: star ratings and review counts pulled from the product feed and rendered automatically on every Meta catalog ad — no developer or design work required. Confirmed at marpipe.com/features/realtime-social-proof. Adds a credibility layer that can improve CTR and ad relevance scores. Sales note: ROI Hunter should assess whether its template library supports equivalent star rating overlays.",
-   src:'Marpipe Blog · May 6, 2026', url:'https://www.marpipe.com/blog/star-ratings-catalog-ads'},
-  {week:'this', c:'Hunch',     cat:'🆕 Product Insights / PPM',  u:'watch',
-   date:'May 5, 2026',
-   f:"Product Insights (May 5, 2026): Hunch blends Meta + Google Analytics + AI to identify converting SKUs. Smart Product Sets auto-exclude budget-draining products across Meta, TikTok, Snap, Pinterest. PPM is no longer exclusive to ROI Hunter — shift sales messaging to 5-platform breadth.",
-   src:'Hunch Blog · May 5, 2026', url:'https://www.hunchads.com/blog/hunch-closes-the-loop-with-product-insights'},
-  {week:'this', c:'Smartly',   cat:'🎤 CEO at POSSIBLE — "New Creative System" Narrative', u:'watch',
-   date:'May 2026',
-   f:"At the POSSIBLE conference in May 2026, Smartly CEO Laura Desmond argued that AI will require marketers to handle 'factors of a thousand or even 10,000' in creative diversity. She framed Smartly as the platform enabling this 'new creative system' at scale — directly pitching the same AI-volume story as ROI Hunter. Reinforce ROI Hunter's AI-at-scale story with catalog-specific evidence: 5-platform breadth, PPM, SMART Segments.",
-   src:'Beet.TV · May 2026', url:'https://www.beet.tv/2026/05/smartlys-laura-desmond-marketers-need-new-creative-system-for-ais-volume-explosion.html'},
-  {week:'this', c:'AdSamurai',  cat:'📰 ChatGPT Ads Article — Positioning on Emerging Channels', u:'watch',
-   date:'May 8, 2026',
-   f:"Adsmurai published a detailed article (May 8, 2026) on how OpenAI's ChatGPT Ads platform works. Early-stage commentary — not yet a product integration — but signals Adsmurai is actively building authority around channels beyond Meta/Google/TikTok. Monitor whether Adsmurai moves from commentary to actual ChatGPT Ads integration in H2 2026.",
-   src:'Adsmurai Articles · May 8, 2026', url:'https://www.adsmurai.com/en/articles/chatgpt-ads-openai-advertising'},
-  {week:'this', c:'AdSamurai',  cat:'📅 "Tech Morning: Growth Illusion" — Barcelona Event May 13', u:'watch',
-   date:'May 13, 2026',
-   f:"Adsmurai hosted a 'Tech Morning: Growth Illusion' event at Loom Glories in Barcelona on May 13, 2026. Theme: rethinking how success is measured — challenging activity mistaken for impact. Consistent with the industry-wide incrementality narrative Smartly is capitalising on via INCRMNTAL. Watch for product announcements tied to this event.",
-   src:'Adsmurai Events · May 2026', url:'https://www.adsmurai.com/en/events'},
-  {week:'this', c:'AdSamurai',  cat:'📅 UGC Performance Event — Barcelona, May 28', u:'watch',
-   date:'May 28, 2026',
-   f:"Adsmurai is co-hosting a live event with Flowbox in Barcelona on May 28, 2026, focused on integrating user-generated content into performance campaigns and scaling its impact. Signals Adsmurai may be building UGC as a performance-layer capability — not just a branding asset. ROI Hunter does not currently offer UGC integration in catalog ad creative. Monitor for a formal product announcement.",
-   src:'Adsmurai Events · May 2026', url:'https://www.adsmurai.com/en/events'},
+async function fetchCSV(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+  const text = await res.text();
+  return parseCSVText(text);
+}
 
-  // ── BEFORE MAY 4TH ──
-  {week:'before', c:'Confect.io',cat:'Pricing & Packaging',   u:'normal',
-   date:'No date found',
-   f:'Pricing unchanged: $500/mo · 30-day free trial. No recent funding or leadership changes confirmed.',
-   src:'confect.io/pricing · No date found',url:'https://confect.io/pricing'},
-  {week:'before', c:'Confect.io',cat:'★ New Features / TikTok CPV', u:'new',
-   date:'No date found',
-   f:'TikTok CPV output now supported — Confect can deliver TikTok video catalog ads. ROI Hunter does not currently support TikTok as a CPV output channel. No announcement date pinned.',
-   src:'academy.confect.io · No date found',url:'https://academy.confect.io/'},
-  {week:'before', c:'Confect.io',cat:'Messaging & Positioning',u:'normal',
-   date:'No date found',
-   f:"Continues to position around 'better ROAS through improved and automated DPA creative.' No homepage copy changes detected.",
-   src:'confect.io · No date found',url:'https://confect.io'},
-  {week:'before', c:'Confect.io',cat:'Company News',           u:'normal',
-   date:'No date found',
-   f:'No funding, acquisitions, or leadership changes. Growing organically. Small team (25 people) limits ability to ship major features quickly.',
-   src:'Crunchbase · No date found',url:'https://www.crunchbase.com/organization/confect'},
+// Try the Google Sheets URL first; fall back to the local file on any error.
+async function fetchCSVWithFallback(name) {
+  const remoteUrl = CSV_URLS[name];
+  const localUrl  = CSV_LOCAL[name];
+  const isPlaceholder = remoteUrl.startsWith('PASTE_');
 
-  {week:'before', c:'Hunch',    cat:'🚨 Pricing & Packaging',  u:'urgent',
-   date:'No date — needs re-verification',
-   f:'Pricing: €2,500/mo minimum · Annual contract + 1-month pilot. No evidence of a price drop. NOTE: Last confirmed source is >6 months old — re-verify from G2 or hunchads.com before quoting in deals.',
-   src:'G2: Hunch Pricing · needs re-verification',url:'https://www.g2.com/products/hunch/pricing'},
-  {week:'before', c:'Hunch',    cat:'⚠️ Updated Features',     u:'updated',
-   date:'April 2026',
-   f:"April 2026: Snapchat Standard & Automated campaign management now native (previously a ROI Hunter edge). Design Collaboration in Creative Studio. CPV for catalog enrichment now available.",
-   src:'Hunch Product Roadmap · April 2026',url:'https://www.hunchads.com/product-roadmap'},
-  {week:'before', c:'Hunch',    cat:'Messaging & Positioning',  u:'normal',
-   date:'No date found',
-   f:"Published 'Smartly pricing: Is it worth it in 2026?' — actively targeting Smartly's enterprise customers. Q2 2026 roadmap: 'Ecommerce solutions across all platforms.'",
-   src:'hunchads.com/blog · No date found',url:'https://www.hunchads.com/blog'},
-  {week:'before', c:'Hunch',    cat:'Company News',              u:'normal',
-   date:'No date found',
-   f:'No verified recent funding data. All pre-acquisition figures are from 2022 or earlier — do not cite in sales conversations. Monitor Crunchbase post-Seaya acquisition for updated financials.',
-   src:'Crunchbase: AdSamurai · outdated',url:'https://www.crunchbase.com/organization/adsamurai'},
+  if (!isPlaceholder) {
+    try {
+      const data = await fetchCSV(remoteUrl);
+      if (data.length > 0) return { data, source: 'sheets' };
+    } catch (e) {
+      console.warn(`Google Sheets fetch failed for "${name}", trying local fallback:`, e.message);
+    }
+  }
 
-  {week:'before', c:'AdSamurai',cat:'⚠️ Pricing',              u:'updated',
-   date:'No date found',
-   f:'SIGNIFICANT CHANGE: Starting price now €49/mo — dramatically lower than previously known ~$600/mo. Suggests entry-level tier strategy to capture SMBs.',
-   src:'AdSamurai Pricing · No date found',url:'https://www.adsmurai.com/en/pricing'},
-  {week:'before', c:'AdSamurai',cat:'🚨 Company News — Acquisition', u:'urgent',
-   date:'No date found',
-   f:'ACQUIRED by Seaya (European growth equity firm). New capital + strategic support for expansion. No exact acquisition date publicly confirmed.',
-   src:'Crunchbase: AdSamurai · No date found',url:'https://www.crunchbase.com/organization/adsamurai'},
-  {week:'before', c:'AdSamurai',cat:'New Features',              u:'normal',
-   date:'Feb 5, 2026',
-   f:'Feb 2026: Platform update — interactive HTML5 creatives exportable to Google Ads/DV360, redesigned AMP dashboards with unified side-panel filter controls, AI Insights in dashboards, smart Media Plan statuses, and AI-powered title optimization in Feeds. No additional product update confirmed for March-May 2026.',
-   src:'AdSamurai Product Updates · Feb 5, 2026',url:'https://www.adsmurai.com/en/product-updates/scalable-creativity-clearer-dashboards-and-unified-measurement'},
+  // Local fallback
+  const data = await fetchCSV(localUrl);
+  return { data, source: 'local' };
+}
 
-  {week:'before', c:'Smartly',  cat:'Pricing & Packaging',       u:'normal',
-   date:'No date found',
-   f:'Enterprise-only: $2,500+/mo custom. Requires $50K+/mo in managed ad spend. Targets large enterprise; ROI Hunter ICP is e-comm/retail brands with 1,000+ SKUs and $500K+ annual spend across Meta, Google, and Snap.',
-   src:'smartly.io/pricing · No date found',url:'https://www.smartly.io/pricing'},
-  {week:'before', c:'Smartly',  cat:'★ Major AI Launches',       u:'new',
-   date:'No date found',
-   f:'Creative Predictive Potential — pre-flight AI using computer vision + eye-tracking to predict attention before launch. Creative Insights — post-flight AI theme analysis. AI Studio is live and actively used across enterprise customers.',
-   src:'BusinessWire: Smartly AI · No date found',url:'https://www.businesswire.com'},
-  {week:'before', c:'Smartly',  cat:'🆕 On-Demand CPV Rendering',u:'new',
-   date:'Oct 8, 2025',
-   f:'Oct 8, 2025: Smartly is now the ONLY Meta Business Partner to offer on-demand catalog video rendering — videos render at moment of ad delivery, not pre-cached. Full catalog coverage, no rendering caps, no Cross-Border Catalog limits. ROI Hunter also delivers unlimited on-demand CPV — without Smartly\'s $50K+/mo ad spend requirement that prices out most e-comm/retail brands.',
-   src:'smartly.io · Oct 8, 2025',url:'https://www.smartly.io/resource-categories/blogs'},
-  {week:'before', c:'Smartly',  cat:'Company News',               u:'normal',
-   date:'No date — needs re-verification',
-   f:'Smartly has raised significant funding (Series B from Highland Europe). Specific amounts and valuation are from sources older than 6 months — do not cite figures in sales conversations without re-verifying from a current source.',
-   src:'Tracxn: Smartly · needs re-verification',url:'https://tracxn.com'},
+// ─── LOAD ALL DATA ────────────────────────────────────────────────────────
+async function loadAllData() {
+  const status = document.getElementById('matrixStatus');
+  const badge  = document.getElementById('syncBadge');
 
-  {week:'before', c:'Marpipe',  cat:'Pricing & Packaging',        u:'normal',
-   date:'No date found',
-   f:'Flat monthly fee based on SKU count — no % of ad spend, no % of revenue. Strong pricing message vs. percentage-based competitors.',
-   src:'marpipe.com/pricing · No date found',url:'https://www.marpipe.com/pricing'},
-  {week:'before', c:'Marpipe',  cat:'🆕 SKU Optimization / PPM', u:'watch',
-   date:'No date found',
-   f:"SKU Optimization (free, confirmed May 2026 — specific launch date not found): filter and exclude worst-performing SKUs by ROAS, revenue vs spend, return rate, CTR — all Meta-based metrics. PPM-adjacent. ROI Hunter differentiator: 5-platform coverage vs Marpipe's Meta-only.",
-   src:'marpipe.com/product-optimizations · No date found',url:'https://www.marpipe.com/product-optimizations'},
-  {week:'before', c:'Marpipe',  cat:'New Features',                u:'normal',
-   date:'No date found',
-   f:'Recent release notes: segment identification post sign-up, enriched catalog output feed rendering, feed search by name, EC Preview Panel, ad builder UX improvements.',
-   src:'Marpipe Release Notes · No date found',url:'https://www.marpipe.com/release-notes'},
-];
+  status.innerHTML = '<span class="spinner"></span> Loading data…';
+  badge.textContent = 'Loading…';
+  badge.className = 'sync-badge';
 
-const OVERVIEW = [
-  {name:'Hunch',
-   wins:[
-     'PPM breadth — 5 platforms (Meta, Google Ads, GA4, Adobe Analytics, Snap) vs Hunch Product Insights which uses only Meta + Google Analytics; wasted-spend dashboard across all 5; Hunch covers Meta + GA only',
-     'SMART Segments + Segment Prioritization — AI-driven SKU segments and Product Delivery Preference allowlist (only platform worldwide with automatic PDP); Hunch\'s Smart Product Sets are limited to Meta + GA and require manual exclusion rules',
-     'Library of 37 pre-made image AND video templates (Meta-approved, Creative Shop co-developed); Hunch has no pre-built templates for either format',
-     'GenAI catalog image enhancement — scene & lifestyle background generation, shadow generation, Visual Search; Hunch has dynamic color matching and product auto-orientation but no scene/lifestyle generation',
-     'Native Adobe Analytics integration for product filtering by Adobe metrics; Hunch has no Adobe Analytics integration'],
-   loses:[
-     '🆕 Product Insights (May 2026): Smart Product Sets auto-exclude poor SKUs using Meta + GA AI — PPM-adjacent',
-     'Snapchat Standard & Automated campaign management now native (April 2026)',
-     'Figma template upload; ROI Hunter does not accept Figma files',
-     'Brand kit (predefined fonts, logos, colors across all templates); ROI Hunter lacks this',
-     'Dynamic color matching and AI product auto-orientation (adapts backgrounds to product color and learns display orientation); ROI Hunter has neither'],
-   pricing:'€2,500/mo minimum · Annual contract · 1-month pilot · ⚠️ Re-verify pricing before quoting',
-   news:'🆕 May 2026: Product Insights — Meta+GA AI to identify converting SKUs. April: Snapchat integration now native.'},
-  {name:'Smartly',
-   wins:[
-     'PPM — 5-platform product filtering (Meta, Google Ads, GA4, Adobe Analytics, Snap) + wasted-spend dashboard; Smartly has zero product-level analytics or SKU filtering capability',
-     'SMART Segments + Segment Prioritization — automated SKU segmentation and Product Delivery Preference allowlist with no catalog splitting or campaign fragmentation; Smartly has no equivalent',
-     'Pre-made video template library (37 Meta-approved templates, co-developed with Meta\'s Creative Shop) + on-demand CPV rendering; Smartly\'s CPV template offering is unconfirmed',
-     'GenAI purpose-built for catalog image enhancement — Visual Search, scene/lifestyle background generation, shadow generation directly for product images; Smartly\'s AI Studio generates broad ad creatives, not catalog-specific images',
-     'Full campaign creation and lifecycle management within the platform; Smartly is primarily a creative production platform'],
-   loses:[
-     '🚨 INCRMNTAL acquisition (May 8, 2026): Smartly now owns AI incrementality measurement — closed-loop creative + measurement + optimization; ROI Hunter has no equivalent measurement capability',
-     'Pre-flight AI (Creative Predictive Potential) — predicts attention & engagement before launch using computer vision + eye-tracking; ROI Hunter has no pre-flight AI analysis',
-     'Post-flight Creative Insights — AI theme analysis surfaces why specific ads perform; ROI Hunter has no post-flight AI',
-     'AI Studio — broad ad creative generation across enterprise customers (not catalog-specific); ROI Hunter\'s GenAI is purpose-built for catalog image enhancement',
-     'Broader channel coverage: Meta, TikTok, Pinterest, Snapchat, Connected TV; ROI Hunter covers Meta, Google, Snap + TikTok CPV Beta (Q3 2026)'],
-   pricing:'$2,500+/mo enterprise custom · Annual contract · Min $50K/mo managed spend',
-   news:'🚨 May 8: Acquired INCRMNTAL — closed-loop creative + measurement + optimization. 🎤 May 2026: CEO at POSSIBLE pushing new creative system narrative. AI: Creative Predictive Potential + Creative Insights (Nov 2025).'},
-  {name:'Marpipe',
-   wins:[
-     'PPM — 5-platform product filtering + SMART Segments (AI-driven, self-optimizing) + Segment Prioritization (PDP allowlist); Marpipe SKU Optimization covers Meta metrics only, with no AI scoring or delivery preference control',
-     'On-demand CPV with confirmed Meta catalog integration (Meta co-developed architecture, Oct 2025); Marpipe\'s video-to-catalog delivery architecture is unconfirmed',
-     'Library of 37 pre-made video templates (Meta-approved); Marpipe offers no pre-made video templates',
-     'Adobe Analytics and GA4 native integrations for cross-channel product insights; Marpipe has neither — product data limited to Meta only',
-     'Campaign creation and full lifecycle management within the platform; Marpipe is a creative-only tool with no campaign management'],
-   loses:[
-     '🆕 SKU Optimization (free, May 2026): filter worst performers by ROAS, revenue, return rate, CTR — PPM-adjacent (Meta metrics only)',
-     'Multivariate creative testing automation — automatically tests every image, headline, color, CTA combination; ROI Hunter has no equivalent',
-     'Dynamic color matching — automatically adapts each product\'s ad background to its primary color; ROI Hunter does not have this',
-     'Shopify-native integration (TRUE vs ROI Hunter YES,BUT/limited)',
-     'Automatic placement adaptation across all formats; ROI Hunter requires manual resizing'],
-   pricing:'Flat monthly fee by SKU count · No % of ad spend · No % of revenue',
-   news:'🆕 SKU Optimization now live (free): filter worst performers by ROAS, revenue, return rate, CTR — Meta-only.'},
-  {name:'Confect.io',
-   wins:[
-     'PPM — 5-platform product filtering (Meta, Google Ads, GA4, Adobe Analytics, Snap); Confect has no product performance management layer whatsoever',
-     'SMART Segments — AI-driven product segments (Top Performers / Poor Performers) built on 5+ years experience and 1B+ processed SKUs; fully automated, no manual upkeep; Confect has no equivalent',
-     'Segment Prioritization — the only platform worldwide with automatic Product Delivery Preference (PDP) allowlist: control which SKUs get promoted without splitting catalogs or fragmenting campaigns; Confect has no equivalent',
-     'Unlimited on-demand CPV renders — Confect CPV is Beta-only, restricted to Pro/Global tiers with no stated render limit',
-     'Library of 37 pre-made video templates (co-developed with Meta\'s Creative Shop) + multi-product videos + direct Meta catalog rendering; Confect has none of these'],
-   loses:[
-     'TikTok Video Catalog Ads — Confect delivers CPV to TikTok today; ROI Hunter TikTok CPV is in Beta, planned Q3 2026',
-     'Transform image → video in 2 clicks; ROI Hunter requires building video templates from scratch',
-     'Dynamic color matching: automatically adapts ad background to each product\'s primary color; ROI Hunter cannot do this',
-     'Background removal in both static AND video templates; ROI Hunter background removal works on static only',
-     'Broader TikTok integration for image catalog ads (YES,BUT) — Confect supports TikTok catalog image ads today; ROI Hunter\'s TikTok support is CPV Beta only (Q3 2026)'],
-   pricing:'$500/mo · 30-day free trial · Scales with catalog size',
-   news:'TikTok CPV now live. Lean team limits R&D velocity.'},
-  {name:'AdSamurai',
-   wins:[
-     '5-platform DPA product filtering (Meta, Google Ads, GA4, Adobe Analytics, Snap) — control which SKUs get promoted based on cross-channel performance; AdSamurai\'s product filtering is limited to GA4 metrics only (YES,BUT)',
-     'SMART Segments + Segment Prioritization — automated AI-driven SKU segmentation with no manual upkeep; only platform with automatic Product Delivery Preference (PDP) allowlist; AdSamurai has no equivalent',
-     'Library of pre-made video templates; AdSamurai has none — plus multi-product videos in a single CPV; AdSamurai CPV (Beta) supports single products only',
-     'Native Adobe Analytics integration + full Snap integration (TRUE); AdSamurai has no Adobe Analytics, only partial Snap (NO,BUT)',
-     'Campaign creation and full lifecycle management within the platform; AdSamurai has no in-platform campaign management'],
-   loses:[
-     'Full GenAI image generation from scratch (TRUE) — AdSamurai generates entirely new product images; ROI Hunter\'s GenAI enhances existing catalog images (scene, background, shadow)',
-     'TikTok native integration with official partnership (TRUE); ROI Hunter TikTok CPV is in Beta, planned Q3 2026',
-     'Automatic placement adaptation across all formats; ROI Hunter requires manual creative resizing (MANUAL)',
-     'Stronger e-commerce platform integrations: Shopify, VTEX and others (TRUE vs ROI Hunter YES,BUT)',
-     '🚨 Acquired by Seaya — new capital likely to accelerate feature development; monitor product-updates page weekly'],
-   pricing:'From €49/mo ⚠️ UPDATED · 30-day free trial · Tiered by features/spend',
-   news:'🚨 (1) Acquired by Seaya. (2) New €49/mo entry tier. 📰 May 8: ChatGPT Ads article — emerging channels positioning. 📅 May 13: Growth Illusion event (Barcelona). 📅 May 28: UGC × Flowbox event (Barcelona).'},
-];
+  try {
+    const [matrixRes, intelRes, overviewRes, sourcesRes] = await Promise.all([
+      fetchCSVWithFallback('matrix'),
+      fetchCSVWithFallback('intel'),
+      fetchCSVWithFallback('overview'),
+      fetchCSVWithFallback('sources'),
+    ]);
 
+    const matrixRows   = matrixRes.data;
+    const intelRows    = intelRes.data;
+    const overviewRows = overviewRes.data;
+    const sourcesRows  = sourcesRes.data;
 
-const SOURCES = [
-  {name:'Hunch',items:[
-    {must:true, url:'https://www.hunchads.com/product-roadmap',label:'hunchads.com/product-roadmap',desc:'Roadmap commitments, upcoming features'},
-    {must:true, url:'https://help.hunchads.com',label:'help.hunchads.com',desc:'Changelog — what\'s actually live'},
-    {must:true, url:'https://www.hunchads.com/blog',label:'hunchads.com/blog',desc:'Feature launches, competitive content'},
-    {must:true, url:'https://www.g2.com/products/hunch/pricing',label:'G2: Hunch Pricing',desc:'Re-verify pricing each update — last known source is >6 months old'},
-    {must:true, url:'https://www.linkedin.com/company/hunch-ad-platform/',label:'LinkedIn: Hunch',desc:'Announcements, hiring signals'},
-    {must:false,url:'https://www.crunchbase.com/organization/hunch',label:'Crunchbase / PitchBook',desc:'Funding, headcount'},
-  ]},
-  {name:'Smartly',items:[
-    {must:true, url:'https://www.smartly.io/resource-categories/blogs',label:'smartly.io/blogs',desc:'AI product launches, thought leadership'},
-    {must:true, url:'https://www.smartly.io/pricing',label:'smartly.io/pricing',desc:'Pricing signals ($2,500+/mo enterprise)'},
-    {must:true, url:'https://www.linkedin.com/company/smartly-io/',label:'LinkedIn: Smartly',desc:'Announcements, hiring signals'},
-    {must:false,url:'https://www.businesswire.com',label:'BusinessWire (search: Smartly)',desc:'Press releases, major announcements'},
-    {must:false,url:'https://www.gartner.com/reviews',label:'Gartner Peer Insights',desc:'Competitive positioning, reviews'},
-    {must:false,url:'https://tracxn.com',label:'Tracxn',desc:'Funding signals — re-verify before citing'},
-  ]},
-  {name:'Marpipe',items:[
-    {must:true, url:'https://www.marpipe.com/blog',label:'marpipe.com/blog',desc:'Feature launches, product thinking'},
-    {must:true, url:'https://www.marpipe.com/release-notes',label:'marpipe.com/release-notes',desc:'Changelog — UX and feature updates'},
-    {must:true, url:'https://www.marpipe.com/product-optimizations',label:'marpipe.com/product-optimizations',desc:'SKU Optimization feature page (confirmed May 2026)'},
-    {must:true, url:'https://www.marpipe.com/features/realtime-social-proof',label:'marpipe.com/features/realtime-social-proof',desc:'Realtime Social Proof — star ratings on catalog ads (May 6, 2026)'},
-    {must:true, url:'https://www.marpipe.com/pricing',label:'marpipe.com/pricing',desc:'Pricing (flat by SKU count)'},
-    {must:true, url:'https://www.linkedin.com/company/marpipe/',label:'LinkedIn: Marpipe',desc:'Announcements, hiring signals'},
-    {must:false,url:'https://www.crunchbase.com/organization/marpipe',label:'Crunchbase',desc:'Funding signals — re-verify before citing'},
-    {must:false,url:'https://www.adexchanger.com',label:'AdExchanger',desc:'Ad tech coverage'},
-  ]},
-  {name:'Confect.io',items:[
-    {must:true, url:'https://confect.io/blog',label:'confect.io/blog',desc:'Feature launches, product news'},
-    {must:true, url:'https://academy.confect.io/',label:'academy.confect.io',desc:'New tutorials = new features shipped'},
-    {must:true, url:'https://www.linkedin.com/company/confect-io/',label:'LinkedIn: Confect.io',desc:'Announcements, hiring signals'},
-    {must:false,url:'https://confect.io/pricing',label:'confect.io/pricing',desc:'Pricing tier changes'},
-    {must:false,url:'https://www.g2.com/products/confect',label:'G2: Confect',desc:'Pricing confirmation, review sentiment'},
-    {must:false,url:'https://www.crunchbase.com/organization/confect',label:'Crunchbase',desc:'Funding, ARR, headcount'},
-  ]},
-  {name:'AdSamurai',items:[
-    {must:true, url:'https://www.adsmurai.com/en/product-updates',label:'adsmurai.com/en/product-updates',desc:'Feature changelog — primary update signal'},
-    {must:true, url:'https://www.adsmurai.com/en/pricing',label:'adsmurai.com/en/pricing',desc:'Pricing (now from €49/mo)'},
-    {must:true, url:'https://www.linkedin.com/company/adsmurai/',label:'LinkedIn: AdSamurai',desc:'Announcements, hiring signals'},
-    {must:false,url:'https://www.adsmurai.com',label:'adsmurai.com',desc:'Messaging, channel partner badges'},
-    {must:false,url:'https://www.crunchbase.com/organization/adsamurai',label:'Crunchbase / Tracxn',desc:'Post-Seaya acquisition developments'},
-  ]},
-];
+    // Determine whether data came from Sheets or local files
+    const fromSheets = [matrixRes, intelRes, overviewRes, sourcesRes].every(r => r.source === 'sheets');
+    const fromLocal  = [matrixRes, intelRes, overviewRes, sourcesRes].every(r => r.source === 'local');
 
-// ─────────────────── STATE ───────────────────
-let activeCat  = 'all';
-let intelComp  = 'all';
-let intelUrgency = 'all';
-let matrixSections = [];
+    // ── Parse matrix ──
+    const sectionMap = {};
+    const sectionOrder = [];
+    for (const row of matrixRows) {
+      if (!row.section_name) continue;
+      if (!sectionMap[row.section_name]) {
+        sectionMap[row.section_name] = { name: row.section_name, cat: row.section_cat, rows: [] };
+        sectionOrder.push(row.section_name);
+      }
+      sectionMap[row.section_name].rows.push({
+        f:  row.feature,
+        rh: row.rh, hu: row.hu, sm: row.sm,
+        ma: row.ma, co: row.co, ad: row.ad,
+        _src: {
+          rh: row.src_rh || '', hu: row.src_hu || '',
+          sm: row.src_sm || '', ma: row.src_ma || '',
+          co: row.src_co || '', ad: row.src_ad || '',
+        },
+      });
+    }
+    matrixSections = sectionOrder.map(n => sectionMap[n]);
 
-// ─────────────────── BADGE HELPER ───────────────────
-function badge(v, corrected, url) {
-  const s = (v||'').trim().toUpperCase().replace(/[\s,]+/g,'');
-  const map = {'TRUE':'bT TRUE','YESBUT':'bYB YES,BUT','NOBUT':'bNB NO,BUT','NO':'bN NO','?':'bQ ?','AUTOMATIC':'bA AUTO','MANUAL':'bM MANUAL','YES':'bT YES'};
+    // ── Parse intel ──
+    INTEL = intelRows.map(r => ({
+      week: r.week, c: r.competitor, cat: r.category,
+      u: r.urgency, date: r.date, f: r.finding,
+      src: r.source_label, url: r.source_url,
+    }));
+
+    // ── Parse overview ──
+    const ovMap = {};
+    const ovOrder = [];
+    for (const row of overviewRows) {
+      if (!row.competitor) continue;
+      if (!ovMap[row.competitor]) {
+        ovMap[row.competitor] = { name: row.competitor, wins: [], loses: [], pricing: '', news: '' };
+        ovOrder.push(row.competitor);
+      }
+      const t = (row.type || '').toLowerCase();
+      if      (t === 'win')     ovMap[row.competitor].wins.push(row.content);
+      else if (t === 'lose')    ovMap[row.competitor].loses.push(row.content);
+      else if (t === 'pricing') ovMap[row.competitor].pricing = row.content;
+      else if (t === 'news')    ovMap[row.competitor].news = row.content;
+    }
+    OVERVIEW = ovOrder.map(n => ovMap[n]);
+
+    // ── Parse sources ──
+    const srcMap = {};
+    const srcOrder = [];
+    for (const row of sourcesRows) {
+      if (!row.competitor) continue;
+      if (!srcMap[row.competitor]) {
+        srcMap[row.competitor] = { name: row.competitor, items: [] };
+        srcOrder.push(row.competitor);
+      }
+      srcMap[row.competitor].items.push({
+        must: (row.priority || '').toLowerCase() === 'must',
+        url:  row.url, label: row.label, desc: row.description,
+      });
+    }
+    SOURCES = srcOrder.map(n => srcMap[n]);
+
+    // ── Build dynamic filter chips ──
+    buildIntelCompChips();
+    buildMatrixCatChips();
+
+    // ── Reset filter state & render ──
+    activeCat    = 'all';
+    intelComp    = 'all';
+    intelUrgency = 'all';
+
+    renderOverview();
+    renderIntel();
+    renderSources();
+    renderMatrix();
+
+    // ── Update status ──
+    const d = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    if (fromSheets) {
+      status.innerHTML = `<span style="color:#16a34a">✓</span> Live from Google Sheets · Loaded ${d}`;
+      badge.textContent = `✓ Updated ${d}`;
+    } else if (fromLocal) {
+      status.innerHTML = `<span style="color:#16a34a">✓</span> Local data (preview mode) · ${d}`;
+      badge.textContent = `✓ Local data`;
+    } else {
+      status.innerHTML = `<span style="color:#d97706">⚠️</span> Mixed sources · ${d}`;
+      badge.textContent = `⚠️ Mixed sources`;
+    }
+    badge.className = 'sync-badge ok';
+
+  } catch (err) {
+    console.error('Data load error:', err);
+    status.innerHTML = `<span style="color:#dc2626">✗</span> Failed to load: ${err.message || err}`;
+    badge.textContent = '✗ Load failed';
+    badge.className = 'sync-badge err';
+  }
+}
+
+// ─── DYNAMIC CHIP BUILDERS ────────────────────────────────────────────────
+function buildIntelCompChips() {
+  const competitors = [...new Set(INTEL.map(i => i.c))].sort();
+  document.getElementById('intelCompChips').innerHTML =
+    `<span class="chip on" onclick="filterIntel(this,'comp','all')">All</span>` +
+    competitors.map(c =>
+      `<span class="chip" onclick="filterIntel(this,'comp','${c}')">${c}</span>`
+    ).join('');
+}
+
+function buildMatrixCatChips() {
+  const cats = [...new Set(matrixSections.map(s => s.cat))];
+  document.getElementById('matrixCatChips').innerHTML =
+    `<span class="chip on" onclick="filterMatrix(this,'all')">All</span>` +
+    cats.map(c =>
+      `<span class="chip" onclick="filterMatrix(this,'${c}')">${c}</span>`
+    ).join('');
+}
+
+// ─── BADGE HELPER ─────────────────────────────────────────────────────────
+function badge(v, url) {
+  const s = (v || '').trim().toUpperCase().replace(/[\s,]+/g, '');
+  const map = {
+    'TRUE':      ['bT',  'TRUE'],
+    'YESBUT':    ['bYB', 'YES,BUT'],
+    'NOBUT':     ['bNB', 'NO,BUT'],
+    'NO':        ['bN',  'NO'],
+    '?':         ['bQ',  '?'],
+    'AUTOMATIC': ['bA',  'AUTO'],
+    'MANUAL':    ['bM',  'MANUAL'],
+    'YES':       ['bT',  'YES'],
+  };
   const hit = map[s];
   if (hit) {
-    const [cls,label] = hit.split(' ');
-    const extra = corrected ? ' corrected' : '';
-    const span = `<span class="b ${cls}${extra}">${label}</span>`;
-    if (url && (cls==='bT'||cls==='bYB'||cls==='bNB')) {
-      return `<a href="${url}" target="_blank" rel="noopener" class="badge-link" title="View source">` + span + `</a>`;
+    const [cls, label] = hit;
+    const span = `<span class="b ${cls}">${label}</span>`;
+    if (url && (cls === 'bT' || cls === 'bYB' || cls === 'bNB')) {
+      return `<a href="${url}" target="_blank" rel="noopener" class="badge-link" title="View source">${span}</a>`;
     }
     return span;
   }
-  return `<span class="b bS">${v}</span>`;
+  // Non-standard text value — render as small text badge
+  return `<span class="b bS">${(v || '').replace(/\n/g, '<br>')}</span>`;
 }
 
 function pill(u) {
-  if (u==='urgent') return '<span class="pill pill-urgent">🚨 Urgent</span>';
-  if (u==='watch')  return '<span class="pill pill-watch">⚠️ Watch</span>';
-  if (u==='updated')return '<span class="pill pill-updated">🔵 Updated</span>';
-  if (u==='new')    return '<span class="pill pill-new">★ New</span>';
+  if (u === 'urgent') return '<span class="pill pill-urgent">🚨 Urgent</span>';
+  if (u === 'watch')  return '<span class="pill pill-watch">⚠️ Watch</span>';
+  if (u === 'updated')return '<span class="pill pill-updated">🔵 Updated</span>';
+  if (u === 'new')    return '<span class="pill pill-new">★ New</span>';
   return '';
 }
 
-// ─────────────────── SIDEBAR NAV ───────────────────
+// ─── SIDEBAR NAV ──────────────────────────────────────────────────────────
 function go(id, el) {
-  // Activate sidebar item
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('on'));
   el.classList.add('on');
-
-  // Update page title
-  const title = el.getAttribute('data-title') || id;
-  document.getElementById('pageTitle').textContent = title;
-
-  // Show matching panel
+  document.getElementById('pageTitle').textContent = el.getAttribute('data-title') || id;
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
   document.getElementById('panel-' + id).classList.add('on');
 }
 
-// ─────────────────── RENDER OVERVIEW ───────────────────
+// ─── RENDER OVERVIEW ──────────────────────────────────────────────────────
 function renderOverview() {
-  document.getElementById('ovGrid').innerHTML = OVERVIEW.map(c=>`
+  document.getElementById('ovGrid').innerHTML = OVERVIEW.map(c => `
     <div class="ov-card">
       <div class="ov-head">
         <span>${c.name}</span>
@@ -661,11 +587,11 @@ function renderOverview() {
         <div class="ov-cols">
           <div class="wins">
             <div class="ov-sect-head">✅ ROI Hunter does better</div>
-            ${c.wins.map(w=>`<div class="ov-li">${w}</div>`).join('')}
+            ${c.wins.map(w => `<div class="ov-li">${w}</div>`).join('')}
           </div>
           <div class="loses">
-            <div class="ov-sect-head">⚠️ They do better</div>
-            ${c.loses.map(l=>`<div class="ov-li">${l}</div>`).join('')}
+            <div class="ov-sect-head">👀 Be aware they have it</div>
+            ${c.loses.map(l => `<div class="ov-li">${l}</div>`).join('')}
           </div>
         </div>
         <div class="ov-news"><div class="news-label">📰 Latest</div>${c.news}</div>
@@ -673,7 +599,7 @@ function renderOverview() {
     </div>`).join('');
 }
 
-// ─────────────────── RENDER INTEL ───────────────────
+// ─── RENDER INTEL ─────────────────────────────────────────────────────────
 function intelCard(i) {
   return `
     <div class="ic ${i.u}">
@@ -681,7 +607,7 @@ function intelCard(i) {
         <div><div class="ic-comp">${i.c}</div><div class="ic-cat">${i.cat}</div></div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
           ${pill(i.u)}
-          <span style="font-size:9px;color:#94a3b8;white-space:nowrap">${i.date||'No date found'}</span>
+          <span style="font-size:9px;color:#94a3b8;white-space:nowrap">${i.date || 'No date found'}</span>
         </div>
       </div>
       <div class="ic-body">${i.f}</div>
@@ -691,25 +617,25 @@ function intelCard(i) {
 
 function sectionHeader(label, count, accent) {
   return `<div style="margin:14px 0 6px;padding:8px 12px;background:${accent};border-radius:8px;font-size:11px;font-weight:700;color:#1e293b">
-    ${label} <span style="font-weight:400;color:#64748b">(${count} item${count!==1?'s':''})</span>
+    ${label} <span style="font-weight:400;color:#64748b">(${count} item${count !== 1 ? 's' : ''})</span>
   </div>`;
 }
 
 function renderIntel() {
-  const filtered = INTEL.filter(i=>
-    (intelComp==='all'||i.c===intelComp) &&
-    (intelUrgency==='all'||i.u===intelUrgency)
+  const filtered = INTEL.filter(i =>
+    (intelComp === 'all' || i.c === intelComp) &&
+    (intelUrgency === 'all' || i.u === intelUrgency)
   );
-  const thisWeek = filtered.filter(i=>i.week==='this');
-  const before   = filtered.filter(i=>i.week==='before');
+  const thisWeek = filtered.filter(i => i.week === 'this');
+  const before   = filtered.filter(i => i.week === 'before');
 
   let html = '';
   if (thisWeek.length) {
-    html += sectionHeader('📅 Week of May 12, 2026 — max 7 days old', thisWeek.length, '#dcfce7');
+    html += sectionHeader('📅 This Week — max 7 days old', thisWeek.length, '#dcfce7');
     html += '<div class="intel-grid">' + thisWeek.map(intelCard).join('') + '</div>';
   }
   if (before.length) {
-    html += sectionHeader('📂 Before May 4th — background & context', before.length, '#f1f5f9');
+    html += sectionHeader('📂 Background & Context', before.length, '#f1f5f9');
     html += '<div class="intel-grid">' + before.map(intelCard).join('') + '</div>';
   }
   if (!html) html = '<div style="color:#94a3b8;font-size:12px;padding:20px">No findings match the current filters.</div>';
@@ -718,156 +644,79 @@ function renderIntel() {
 
 function filterIntel(el, type, val) {
   const row = el.closest('.filters');
-  row.querySelectorAll('.chip').forEach(c=>{
-    const oc = c.getAttribute('onclick')||'';
+  row.querySelectorAll('.chip').forEach(c => {
+    const oc = c.getAttribute('onclick') || '';
     if (oc.includes(`'${type}'`)) c.classList.remove('on');
   });
   el.classList.add('on');
-  if (type==='comp') intelComp=val; else intelUrgency=val;
+  if (type === 'comp') intelComp = val; else intelUrgency = val;
   renderIntel();
 }
 
-// ─────────────────── RENDER MATRIX ───────────────────
-// ─────────────────── EMBEDDED FEATURE MATRIX ───────────────────
-// Full matrix — updated directly in this file (no external dependency)
-// Column key: rh=ROI Hunter, hu=Hunch, sm=Smartly, ma=Marpipe, co=Confect.io, ad=AdSamurai
-const EMBEDDED_MATRIX = [
-  {name:'PRODUCT PERFORMANCE MANAGEMENT & ADS MANAGEMENT',cat:'PPM',rows:[
-    {f:'Filter products — Meta metrics',              rh:'TRUE',   hu:'YES,BUT',  sm:'NO',    ma:'YES,BUT',  co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Filter products — Google metrics',            rh:'TRUE',   hu:'NO',       sm:'NO',    ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Filter products — GA4 metrics',               rh:'TRUE',   hu:'YES,BUT',  sm:'NO',    ma:'NO',       co:'NO',   ad:'YES,BUT',_corr:{}},
-    {f:'Filter products — Adobe metrics',             rh:'TRUE',   hu:'NO',       sm:'NO',    ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Filter products — Snap metrics',              rh:'TRUE',   hu:'NO',       sm:'NO',    ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Filter products by feed attributes',          rh:'TRUE',   hu:'TRUE',     sm:'NO',    ma:'YES,BUT',  co:'NO',   ad:'YES,BUT',_corr:{}},
-    {f:'Analytical tools for product analysis',       rh:'TRUE',   hu:'YES,BUT',  sm:'NO',    ma:'YES,BUT',  co:'NO',   ad:'TRUE',   _corr:{}},
-    {f:'Product performance per campaign',            rh:'TRUE',   hu:'YES,BUT',  sm:'NO',    ma:'NO',       co:'NO',   ad:'TRUE',   _corr:{}},
-    {f:'Dashboard: wasted spend / poor performers',   rh:'TRUE',   hu:'YES,BUT',  sm:'NO',    ma:'YES,BUT',  co:'NO',   ad:'TRUE',   _corr:{}},
-    {f:'SMART Segments — AI-driven SKU segmentation (Top Performers / Poor Performers)',
-                                                      rh:'TRUE',   hu:'NO',       sm:'NO',    ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Segment Prioritization — PDP allowlist (control SKU promotion without splitting catalogs)',
-                                                      rh:'TRUE',   hu:'NO',       sm:'NO',    ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Create / Edit campaign inside platform',      rh:'TRUE',   hu:'TRUE',     sm:'TRUE',  ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Campaign Insights',                           rh:'TRUE',   hu:'NO',       sm:'TRUE',  ma:'NO',       co:'NO',   ad:'TRUE',   _corr:{}},
-  ]},
-  {name:'INTEGRATIONS WITH OTHER TOOLS',cat:'Integrations',rows:[
-    {f:'Native Integration — Meta',                   rh:'TRUE',   hu:'TRUE',     sm:'TRUE',  ma:'TRUE',     co:'TRUE', ad:'TRUE',   _corr:{}},
-    {f:'Native Integration — Google',                 rh:'TRUE',   hu:'TRUE',     sm:'TRUE',  ma:'NO',       co:'NO',   ad:'TRUE',   _corr:{}},
-    {f:'Native Integration — GA4',                    rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'TRUE',   _corr:{}},
-    {f:'Native Integration — Snap',                   rh:'TRUE',   hu:'TRUE',     sm:'TRUE',  ma:'TRUE',     co:'NO',   ad:'NO,BUT', _corr:{}},
-    {f:'Native Integration — Pinterest',              rh:'NO',     hu:'NO',       sm:'?',     ma:'TRUE',     co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Native Integration — TikTok',                 rh:'Beta\n(CPV, Q3 2026)',hu:'NO',sm:'TRUE',ma:'NO,BUT',co:'YES,BUT',ad:'TRUE',_corr:{}},
-    {f:'Native Integration — Adobe Analytics',        rh:'TRUE',   hu:'NO',       sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Upload creative assets via extra feed',       rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'TRUE',     co:'NO',   ad:'TRUE',   _corr:{}},
-    {f:'Data quality: Meta Catalog vs feeds',         rh:'TRUE',   hu:'NO',       sm:'?',     ma:'NO',       co:'NO',   ad:'TRUE',   _corr:{}},
-    {f:'Integrations: ecomm (Shopify, VTEX…)',        rh:'YES,BUT',hu:'TRUE',     sm:'?',     ma:'TRUE',     co:'YES,BUT',ad:'TRUE', _corr:{}},
-  ]},
-  {name:'IMAGE TEMPLATE EDITOR',cat:'Image',rows:[
-    {f:'Image Template Editor',                       rh:'TRUE',   hu:'TRUE',     sm:'TRUE',  ma:'TRUE',     co:'TRUE', ad:'TRUE',   _corr:{}},
-    {f:'Apply dynamic fields in template',            rh:'TRUE',   hu:'TRUE',     sm:'TRUE',  ma:'TRUE',     co:'TRUE', ad:'TRUE',   _corr:{}},
-    {f:'Apply custom fonts',                          rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'TRUE',     co:'TRUE', ad:'TRUE',   _corr:{}},
-    {f:'Price formatting',                            rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'TRUE',     co:'TRUE', ad:'TRUE',   _corr:{}},
-    {f:'Library of client-created templates',         rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'TRUE',     co:'TRUE', ad:'TRUE',   _corr:{}},
-    {f:'Library of PRE-MADE templates',               rh:'TRUE',   hu:'NO',       sm:'?',     ma:'TRUE',     co:'TRUE', ad:'TRUE',   _corr:{}},
-    {f:'Upload template as .psd',                     rh:'?',      hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Upload template from Figma',                  rh:'NO',     hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Brand kit (fonts, logos, colors)',             rh:'NO',     hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Extra brand content in editor',               rh:'TRUE',   hu:'NO,BUT',   sm:'?',     ma:'TRUE',     co:'TRUE', ad:'TRUE',   _corr:{}},
-    {f:'Download template as image',                  rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'TRUE',     co:'TRUE', ad:'NO',     _corr:{}},
-    {f:'Creative services (graphic designer)',         rh:'NO',     hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Creative collaboration / review tools',       rh:'NO',     hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-  ]},
-  {name:'VIDEO TEMPLATE EDITOR / CPV (CATALOG PRODUCT VIDEOS)',cat:'Video',rows:[
-    {f:'Max renders per creative',rh:'Unlimited\n(On-demand CPV)',hu:'up to 2,000\n/ template',sm:'On-demand\n(Meta co-dev, Oct 2025)',ma:'No stated\nlimit',co:'Beta (Pro+)\nNo limit stated',ad:'up to 50 prods\n(BETA)',_corr:{}},
-    {f:'Video Template Editor feature',               rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'TRUE',     co:'TRUE', ad:'TRUE',   _corr:{}},
-    {f:'Apply dynamic fields in video template',      rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'TRUE',     co:'TRUE', ad:'TRUE',   _corr:{}},
-    {f:'Library of PRE-MADE video templates',         rh:'TRUE',   hu:'NO',       sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Transform image→video template',              rh:'NO',     hu:'NO',       sm:'?',     ma:'NO',       co:'TRUE', ad:'NO',     _corr:{}},
-    {f:'Video animations in editor',                  rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'TRUE',     co:'TRUE', ad:'NO',     _corr:{}},
-    {f:'Extra brand content in video editor',         rh:'TRUE',   hu:'NO,BUT',   sm:'?',     ma:'TRUE',     co:'TRUE', ad:'TRUE',   _corr:{}},
-    {f:'Render videos directly to Meta catalog',      rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'NO,BUT',   co:'NO',   ad:'TRUE',   _corr:{}},
-    {f:'Pick best products for CPV',                  rh:'TRUE',   hu:'YES,BUT',  sm:'?',     ma:'YES,BUT',  co:'NO',   ad:'YES,BUT',_corr:{}},
-    {f:'Upload video template as .psd',               rh:'?',      hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Royalty-free asset library in editor',        rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'TRUE',   _corr:{}},
-    {f:'Multi-product videos',                        rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Video placement previews',                    rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'NO',       co:'YES,BUT',ad:'NO',   _corr:{}},
-    {f:'Launch Video Dynamic Ads from platform',      rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Download video template as mp4',              rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Music / voiceovers',                          rh:'TRUE',   hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'TRUE',   _corr:{}},
-    {f:'TikTok Video Catalog Ads output',             rh:'Beta\n(CPV, Q3 2026)',hu:'NO',sm:'TRUE',ma:'NO,BUT',co:'YES,BUT',ad:'TRUE',_corr:{}},
-  ]},
-  {name:'AI / DYNAMIC TOOLS',cat:'AI',rows:[
-    {f:'Background removal — static templates',       rh:'TRUE',   hu:'TRUE',     sm:'TRUE',  ma:'TRUE',     co:'TRUE', ad:'NO',     _corr:{}},
-    {f:'Background removal — video templates\n(RH: via Solutions Team)',rh:'YES,BUT',hu:'TRUE',sm:'TRUE',ma:'NO',co:'TRUE',ad:'NO',_corr:{}},
-    {f:'Adapt to placement',                          rh:'MANUAL', hu:'AUTOMATIC',sm:'?',     ma:'AUTOMATIC',co:'MANUAL',ad:'AUTOMATIC',_corr:{}},
-    {f:'Dynamic color match to product color',        rh:'NO',     hu:'TRUE',     sm:'?',     ma:'TRUE',     co:'TRUE', ad:'NO',     _corr:{}},
-    {f:'AI product orientation (auto-learn)',          rh:'NO',     hu:'TRUE',     sm:'?',     ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'GenAI — generate additional images',          rh:'NO',     hu:'NO',       sm:'TRUE',  ma:'NO',       co:'NO',   ad:'TRUE',   _corr:{}},
-    {f:'Pre-flight AI creative analysis\n(predict attention / engagement before launch)',
-                                                      rh:'NO',     hu:'NO',       sm:'TRUE',  ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Post-flight creative AI insights\n(theme analysis, performance drivers)',
-                                                      rh:'NO',     hu:'NO',       sm:'TRUE',  ma:'NO',       co:'NO',   ad:'NO',     _corr:{}},
-    {f:'Multivariate creative testing\n(automated A/B across all combos)',
-                                                      rh:'NO',     hu:'NO',       sm:'NO',    ma:'TRUE',     co:'NO',   ad:'NO',     _corr:{}},
-    {f:'GenAI — scene / lifestyle background generation',rh:'TRUE',hu:'?',        sm:'?',     ma:'?',        co:'?',    ad:'?',      _corr:{}},
-    {f:'GenAI — shadow generation',                   rh:'TRUE',   hu:'?',        sm:'?',     ma:'?',        co:'?',    ad:'?',      _corr:{}},
-    {f:'GenAI — Visual Search (filter catalog images by text prompt)',
-                                                      rh:'TRUE',   hu:'?',        sm:'?',     ma:'?',        co:'?',    ad:'?',      _corr:{}},
-  ]},
-  {name:'PRICING & PACKAGING',cat:'Pricing',rows:[
-    {f:'Starting price',rh:'From $1,800/mo',hu:'€2,500/mo min\n(annual contract)',sm:'$2,500+/mo\nEnterprise custom',ma:'Flat fee by\nSKU count',co:'$500/mo\n30-day free trial',ad:'From €49/mo\n(was ~$600)',_corr:{}},
-  ]},
-];
-
+// ─── RENDER MATRIX ────────────────────────────────────────────────────────
 function renderMatrix() {
   const wrap = document.getElementById('matrixWrap');
-  const filtered = matrixSections.filter(s=>activeCat==='all'||s.cat===activeCat);
-  if (!filtered.length) { wrap.innerHTML='<div style="color:#94a3b8;font-size:12px;padding:20px">No data.</div>'; return; }
+  const filtered = matrixSections.filter(s => activeCat === 'all' || s.cat === activeCat);
+  if (!filtered.length) {
+    wrap.innerHTML = '<div style="color:#94a3b8;font-size:12px;padding:20px">No data.</div>';
+    return;
+  }
 
   let html = `<table><thead><tr>
-    <th>Feature / Capability</th><th>ROI Hunter</th><th>Hunch</th><th>Smartly</th><th>Marpipe</th><th>Confect.io</th><th>AdSamurai</th>
+    <th>Feature / Capability</th>
+    <th>ROI Hunter</th><th>Hunch</th><th>Smartly</th>
+    <th>Marpipe</th><th>Confect.io</th><th>AdSamurai</th>
   </tr></thead><tbody>`;
+
   for (const sec of filtered) {
     html += `<tr class="cat-row"><td colspan="7">${sec.name}</td></tr>`;
     for (const r of sec.rows) {
-      html += `<tr><td>${r.f.replace(/\n/g,'<br><span style="font-size:10px;color:#94a3b8">')+(r.f.includes('\n')?'</span>':'')}</td>
-        <td>${badge(r.rh, false,          getSource(r.f,'rh'))}</td>
-        <td>${badge(r.hu, !!r._corr.hu,  getSource(r.f,'hu'))}</td>
-        <td>${badge(r.sm, false,          getSource(r.f,'sm'))}</td>
-        <td>${badge(r.ma, !!r._corr.ma,  getSource(r.f,'ma'))}</td>
-        <td>${badge(r.co, false,          getSource(r.f,'co'))}</td>
-        <td>${badge(r.ad, false,          getSource(r.f,'ad'))}</td>
+      // Feature name: support | as a sub-text separator (e.g. "Feature|sub-note")
+      const fParts = r.f.split('|');
+      const fHtml = fParts.length > 1
+        ? `${fParts[0]}<br><span style="font-size:10px;color:#94a3b8">${fParts.slice(1).join(' ')}</span>`
+        : r.f;
+      html += `<tr>
+        <td>${fHtml}</td>
+        <td>${badge(r.rh, r._src.rh)}</td>
+        <td>${badge(r.hu, r._src.hu)}</td>
+        <td>${badge(r.sm, r._src.sm)}</td>
+        <td>${badge(r.ma, r._src.ma)}</td>
+        <td>${badge(r.co, r._src.co)}</td>
+        <td>${badge(r.ad, r._src.ad)}</td>
       </tr>`;
     }
   }
+
   html += '</tbody></table>';
   html += `<div style="margin-top:10px;font-size:10px;color:#64748b;">
     <strong>Legend:</strong>
-    <span class="b bT" style="margin:0 4px">TRUE</span> Fully supported &nbsp;
+    <span class="b bT"  style="margin:0 4px">TRUE</span> Fully supported &nbsp;
     <span class="b bYB" style="margin:0 4px">YES,BUT</span> Partial / caveats &nbsp;
     <span class="b bNB" style="margin:0 4px">NO,BUT</span> Workaround exists &nbsp;
-    <span class="b bN" style="margin:0 4px">NO</span> Not supported &nbsp;
-    <span class="b bQ" style="margin:0 4px">?</span> Unverified &nbsp;
+    <span class="b bN"  style="margin:0 4px">NO</span> Not supported &nbsp;
+    <span class="b bQ"  style="margin:0 4px">?</span> Unverified &nbsp;
     <span style="color:#2563eb">·</span> Underlined badges link to source evidence
   </div>`;
+
   wrap.innerHTML = html;
 }
 
 function filterMatrix(el, cat) {
-  document.querySelectorAll('#panel-matrix .chip').forEach(c=>c.classList.remove('on'));
+  document.querySelectorAll('#matrixCatChips .chip').forEach(c => c.classList.remove('on'));
   el.classList.add('on');
   activeCat = cat;
   renderMatrix();
 }
 
-
-// ─────────────────── RENDER SOURCES ───────────────────
+// ─── RENDER SOURCES ───────────────────────────────────────────────────────
 function renderSources() {
-  document.getElementById('srcGrid').innerHTML = SOURCES.map(s=>`
+  document.getElementById('srcGrid').innerHTML = SOURCES.map(s => `
     <div class="src-card">
       <div class="src-head">${s.name}</div>
-      ${s.items.map(i=>`
+      ${s.items.map(i => `
         <div class="src-row">
-          <span class="${i.must?'must':'gen'}">${i.must?'MUST':'Gen'}</span>
+          <span class="${i.must ? 'must' : 'gen'}">${i.must ? 'MUST' : 'Gen'}</span>
           <div class="src-link">
             <a href="${i.url}" target="_blank">${i.label}</a>
             <span class="src-desc">${i.desc}</span>
@@ -876,23 +725,8 @@ function renderSources() {
     </div>`).join('');
 }
 
-// ─────────────────── LOAD MATRIX ───────────────────
-function loadMatrix() {
-  const status = document.getElementById('matrixStatus');
-  const badge  = document.getElementById('syncBadge');
-  matrixSections = EMBEDDED_MATRIX;
-  renderMatrix();
-  const d = BUILT_DATE.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  status.innerHTML = `<span style="color:#16a34a">✓</span> Embedded data · Updated ${d}`;
-  badge.textContent = `✓ Data as of ${d}`;
-  badge.className = 'sync-badge ok';
-}
-
-// ─────────────────── INIT ───────────────────
-renderOverview();
-renderIntel();
-renderSources();
-loadMatrix();
+// ─── INIT ─────────────────────────────────────────────────────────────────
+loadAllData();
 </script>
 </body>
 </html>
