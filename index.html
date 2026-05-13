@@ -356,6 +356,8 @@ function parseCSVText(text) {
     Papa.parse(text, {
       header: true,
       skipEmptyLines: true,
+      transformHeader: h => h.trim(),
+      transform: v => v.trim(),
       complete: result => resolve(result.data),
       error: reject,
     });
@@ -530,6 +532,7 @@ function buildMatrixCatChips() {
 // ─── BADGE HELPER ─────────────────────────────────────────────────────────
 function badge(v, url) {
   const s = (v || '').trim().toUpperCase().replace(/[\s,]+/g, '');
+  const cleanUrl = (url || '').trim();
   const map = {
     'TRUE':      ['bT',  'TRUE'],
     'YESBUT':    ['bYB', 'YES,BUT'],
@@ -544,8 +547,8 @@ function badge(v, url) {
   if (hit) {
     const [cls, label] = hit;
     const span = `<span class="b ${cls}">${label}</span>`;
-    if (url && (cls === 'bT' || cls === 'bYB' || cls === 'bNB')) {
-      return `<a href="${url}" target="_blank" rel="noopener" class="badge-link" title="View source">${span}</a>`;
+    if (cleanUrl) {
+      return `<a href="${cleanUrl}" target="_blank" rel="noopener" class="badge-link" title="View source">${span}</a>`;
     }
     return span;
   }
