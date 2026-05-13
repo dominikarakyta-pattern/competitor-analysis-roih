@@ -553,7 +553,11 @@ function badge(v, url) {
     return span;
   }
   // Non-standard text value — render as small text badge
-  return `<span class="b bS">${(v || '').replace(/\n/g, '<br>')}</span>`;
+  const spanS = `<span class="b bS">${(v || '').replace(/\n/g, '<br>')}</span>`;
+  if (cleanUrl) {
+    return `<a href="${cleanUrl}" target="_blank" rel="noopener" class="badge-link" title="View source">${spanS}</a>`;
+  }
+  return spanS;
 }
 
 function pill(u) {
