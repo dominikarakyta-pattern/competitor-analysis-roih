@@ -756,6 +756,17 @@ function renderGenAIMatrix() {
     </tr>`;
   }
 
+  // Key Differentiator row at the bottom
+  const diffCells = vendors.map(v => {
+    const isRH = (v['Vendor']||'').includes('ROI HUNTER');
+    const diff = (v['Key Differentiator / Positioning']||'').replace(/\n/g,' ').trim();
+    return `<td style="font-size:10px;color:#475569;line-height:1.5;vertical-align:top${isRH?';background:#f0f6ff;color:#1e293b;font-weight:500':''}">${diff||'—'}</td>`;
+  }).join('');
+  html += `<tr>
+    <td style="font-weight:600;font-size:11px;color:#1e293b;position:sticky;left:0;background:#fff;z-index:1;border-right:1px solid #e4eaf6;border-top:2px solid #e4eaf6;vertical-align:top">Key Differentiator</td>
+    ${diffCells}
+  </tr>`;
+
   html += `</tbody></table>
   <div style="margin-top:10px;font-size:10px;color:#64748b;">
     <span class="bGY">Yes</span> Supported &nbsp;
