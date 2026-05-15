@@ -758,7 +758,7 @@ function renderGenAIMatrix() {
     const diffCells = vendors.map(v => {
       const isRH = (v['Vendor']||'').includes('ROI HUNTER');
       const diff = (v[GM_KEY_DIFF]||'').replace(/\n/g,' ').trim();
-      return `<td style="font-size:10px;color:#1e293b;line-height:1.5;vertical-align:top${isRH?';background:#f0f6ff;font-weight:500':''}">${diff||'—'}</td>`;
+      return `<td style="font-size:10px;color:#1e293b;line-height:1.5;vertical-align:top;background:#fff;font-weight:400">${diff||'—'}</td>`;
     }).join('');
     html += `<tr>
       <td style="font-weight:600;font-size:11px;color:#1e293b;position:sticky;left:0;background:#fff;z-index:1;border-right:1px solid #e4eaf6;border-top:2px solid #e4eaf6;vertical-align:top">Key Differentiator</td>
