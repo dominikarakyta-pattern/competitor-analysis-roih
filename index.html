@@ -10,112 +10,47 @@
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
        background: #f0f4fc; color: #1e293b; font-size: 13px;
        display: flex; height: 100vh; overflow: hidden; }
-
-/* ─── SIDEBAR ─── */
 .sidebar {
   width: 252px; min-width: 252px; flex-shrink: 0;
   background: #0d1929;
   display: flex; flex-direction: column;
   height: 100vh; overflow-y: auto;
 }
-.sidebar-brand {
-  padding: 18px 18px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  flex-shrink: 0;
-}
+.sidebar-brand { padding: 18px 18px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
 .brand-logo { display: block; width: 152px; height: auto; }
-.brand-sub {
-  font-size: 9px; color: rgba(255,255,255,0.32); margin-top: 8px;
-  text-transform: uppercase; letter-spacing: 1.4px; font-weight: 700;
-}
-
-/* NAV */
+.brand-sub { font-size: 9px; color: rgba(255,255,255,0.32); margin-top: 8px; text-transform: uppercase; letter-spacing: 1.4px; font-weight: 700; }
 .sidebar-nav { flex: 1; padding: 10px 0 8px; }
 .nav-tool { margin-bottom: 2px; }
-.nav-tool-label {
-  padding: 10px 18px 5px;
-  font-size: 9.5px; font-weight: 700;
-  color: rgba(255,255,255,0.3);
-  text-transform: uppercase; letter-spacing: 1px;
-  display: flex; align-items: center; gap: 7px;
-}
-.nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 16px 8px 26px;
-  font-size: 12.5px; font-weight: 500;
-  color: rgba(255,255,255,0.55);
-  cursor: pointer; border: none; background: none;
-  width: 100%; text-align: left;
-  transition: all .12s;
-  border-left: 3px solid transparent;
-}
+.nav-tool-label { padding: 10px 18px 5px; font-size: 9.5px; font-weight: 700; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 7px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 26px; font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,0.55); cursor: pointer; border: none; background: none; width: 100%; text-align: left; transition: all .12s; border-left: 3px solid transparent; }
 .nav-item:hover { color: rgba(255,255,255,0.88); background: rgba(255,255,255,0.05); }
-.nav-item.on {
-  color: #fff;
-  background: rgba(59,130,246,0.14);
-  border-left-color: #3b82f6;
-  font-weight: 600;
-}
+.nav-item.on { color: #fff; background: rgba(59,130,246,0.14); border-left-color: #3b82f6; font-weight: 600; }
 .nav-item .ni { font-size: 13px; width: 18px; text-align: center; flex-shrink: 0; }
 .nav-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 8px 12px; }
-
-/* SIDEBAR FOOTER */
-.sidebar-footer {
-  padding: 12px 18px;
-  border-top: 1px solid rgba(255,255,255,0.07);
-  flex-shrink: 0;
-}
+.sidebar-footer { padding: 12px 18px; border-top: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
 .sync-badge { font-size: 10px; color: rgba(255,255,255,0.28); }
 .sync-badge.ok   { color: #4ade80; }
 .sync-badge.warn { color: #fbbf24; }
 .sync-badge.err  { color: #f87171; }
-
-/* ─── MAIN CONTENT ─── */
 .main { flex: 1; min-width: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-
-/* TOP BAR */
-.topbar {
-  background: #fff;
-  border-bottom: 1px solid #e4eaf6;
-  padding: 0 24px;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 52px; flex-shrink: 0;
-}
+.topbar { background: #fff; border-bottom: 1px solid #e4eaf6; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 52px; flex-shrink: 0; }
 .topbar-left { display: flex; align-items: baseline; gap: 10px; }
 .page-title { font-size: 17px; font-weight: 700; color: #0d1929; }
 .page-tool  { font-size: 11px; color: #94a3b8; font-weight: 500; }
 .topbar-right { display: flex; align-items: center; gap: 8px; }
-.reload-btn {
-  background: #fff; border: 1px solid #d4ddf0; color: #3b82f6;
-  border-radius: 6px; padding: 5px 13px; font-size: 11px; font-weight: 700;
-  cursor: pointer; transition: all .14s;
-}
+.reload-btn { background: #fff; border: 1px solid #d4ddf0; color: #3b82f6; border-radius: 6px; padding: 5px 13px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all .14s; }
 .reload-btn:hover { background: #eff6ff; border-color: #3b82f6; }
-
-/* CONTENT */
 .content { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
-
-/* PANELS — flex-based, no fixed heights */
 .panel { display: none; flex: 1; flex-direction: column; overflow: hidden; }
 .panel.on { display: flex; }
-
-/* FILTERS */
-.filters {
-  background: #fff; border-bottom: 1px solid #e4eaf6;
-  padding: 9px 22px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
-  flex-shrink: 0;
-}
+.filters { background: #fff; border-bottom: 1px solid #e4eaf6; padding: 9px 22px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; flex-shrink: 0; }
 .flabel { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: .5px; margin-right: 2px; }
 .chip { padding: 4px 10px; border-radius: 20px; border: 1px solid #dce5f5; background: #f4f7fc; font-size: 11px; cursor: pointer; color: #475569; transition: all .14s; white-space: nowrap; }
 .chip.on { background: #2563eb; border-color: #2563eb; color: #fff; }
 .chip:hover:not(.on) { border-color: #94a3b8; }
 .sep { width: 1px; height: 20px; background: #e2e8f0; margin: 0 4px; }
-
-/* SCROLL AREAS */
 .scroll { flex: 1; overflow-y: auto; padding: 22px 24px; }
 .scroll-with-filters { flex: 1; overflow-y: auto; padding: 22px 24px; }
-
-/* OVERVIEW GRID */
 .ov-grid { display: grid; grid-template-columns: 1fr; gap: 14px; max-width: 960px; }
 .ov-card { background: #fff; border-radius: 12px; box-shadow: 0 1px 5px rgba(13,27,44,0.08); overflow: hidden; }
 .ov-head { background: #0d1929; color: #fff; padding: 12px 16px; font-size: 13px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
@@ -131,8 +66,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .loses .ov-li::before { background: #d97706; }
 .ov-news { font-size: 11px; color: #475569; background: #f4f7fc; border-radius: 8px; padding: 9px 12px; line-height: 1.5; border-top: 1px solid #e4eaf6; margin-top: 10px; }
 .news-label { font-size: 9px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; }
-
-/* INTEL CARDS */
 .intel-grid { display: grid; gap: 10px; }
 .ic { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(13,27,44,0.08); padding: 12px 14px; border-left: 4px solid #e2e8f0; }
 .ic.urgent { border-left-color: #dc2626; }
@@ -151,8 +84,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .pill-watch   { background: #fffbeb; color: #d97706; }
 .pill-updated { background: #eff6ff; color: #2563eb; }
 .pill-new     { background: #f0fdf4; color: #16a34a; }
-
-/* MATRIX */
 .matrix-outer { flex: 1; overflow: hidden; display: flex; flex-direction: column; padding: 22px 24px; }
 .matrix-status { font-size: 11px; color: #64748b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .matrix-scroll { flex: 1; overflow: auto; }
@@ -169,8 +100,6 @@ tbody tr:hover td:first-child { background: #f4f7fc; }
 td:not(:first-child) { text-align: center; }
 .cat-row td { background: #1e3a5f !important; color: #93c5fd; font-size: 9px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; padding: 5px 12px; }
 .cat-row td:first-child { background: #1e3a5f !important; z-index: 1; }
-
-/* CELL BADGES */
 .b { display: inline-block; border-radius: 4px; font-size: 10px; font-weight: 700; padding: 2px 7px; white-space: nowrap; }
 .bT  { background: #dcfce7; color: #15803d; }
 .bYB { background: #fef3c7; color: #92400e; }
@@ -183,8 +112,6 @@ td:not(:first-child) { text-align: center; }
 .bM  { background: #f3e8ff; color: #7e22ce; }
 .bS  { background: #f4f7fc; color: #64748b; font-size: 9px; max-width: 80px; line-height: 1.2; padding: 2px 5px; white-space: normal; }
 .bV  { background: #ecfdf5; color: #059669; }
-
-/* SOURCES */
 .src-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px,1fr)); gap: 14px; }
 .src-card { background: #fff; border-radius: 12px; box-shadow: 0 1px 5px rgba(13,27,44,0.08); overflow: hidden; }
 .src-head { background: #0d1929; color: #fff; padding: 11px 16px; font-size: 13px; font-weight: 700; }
@@ -196,22 +123,111 @@ td:not(:first-child) { text-align: center; }
 .src-link a { color: #2563eb; text-decoration: none; word-break: break-all; }
 .src-link a:hover { text-decoration: underline; }
 .src-desc { display: block; font-size: 10px; color: #94a3b8; margin-top: 1px; }
-
-/* RULE NOTE */
 .rule-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 11px 16px; font-size: 11px; color: #92400e; margin-bottom: 16px; line-height: 1.6; }
+
+/* ─── GENAI COMPARISON ─── */
+.genai-tabs { background: #fff; border-bottom: 1px solid #e4eaf6; padding: 0 24px; display: flex; gap: 0; flex-shrink: 0; }
+.genai-tab { padding: 10px 18px; font-size: 12px; font-weight: 500; color: #64748b; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .12s; }
+.genai-tab:hover { color: #374151; }
+.genai-tab.on { color: #2563eb; border-bottom-color: #2563eb; }
+.genai-sub { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+.genai-sub.on { display: flex; }
+/* GenAI matrix */
+.gm-outer { flex: 1; overflow: hidden; display: flex; flex-direction: column; padding: 18px 24px; }
+.gm-status { font-size: 11px; color: #64748b; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.gm-scroll { flex: 1; overflow: auto; }
+.gm-table { border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 5px rgba(13,27,44,0.08); min-width: 900px; width: 100%; }
+.gm-table thead th { background: #0d1929; color: #fff; font-size: 10px; font-weight: 700; padding: 9px 10px; text-align: center; position: sticky; top: 0; z-index: 2; line-height: 1.3; min-width: 70px; }
+.gm-table thead th:first-child { text-align: left; min-width: 175px; position: sticky; left: 0; z-index: 3; }
+.gm-table thead th.gm-rh { background: #1e3a5f; }
+.gm-table tbody td { padding: 7px 10px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; text-align: center; font-size: 11px; }
+.gm-table tbody td:first-child { text-align: left; position: sticky; left: 0; background: #fff; z-index: 1; border-right: 1px solid #e4eaf6; font-size: 12px; font-weight: 500; color: #1e293b; }
+.gm-table tbody td.gm-diff { text-align: left; font-size: 10px; color: #475569; max-width: 190px; line-height: 1.4; }
+.gm-table tbody tr.gm-rh-row td { background: #f0f6ff; }
+.gm-table tbody tr.gm-rh-row td:first-child { color: #0d1929; font-weight: 700; }
+.gm-table tbody tr:not(.gm-rh-row):hover td { background: #f8fafc; }
+.gm-table tbody tr:not(.gm-rh-row):hover td:first-child { background: #f8fafc; }
+.bGY { background: #dcfce7; color: #15803d; display: inline-block; border-radius: 4px; font-size: 10px; font-weight: 700; padding: 2px 8px; }
+.bGN { background: #f1f5f9; color: #94a3b8; display: inline-block; border-radius: 4px; font-size: 10px; font-weight: 700; padding: 2px 8px; }
+.bGP { background: #fef3c7; color: #92400e; display: inline-block; border-radius: 4px; font-size: 10px; font-weight: 700; padding: 2px 8px; }
+.bGQ { background: #eff6ff; color: #3b82f6; display: inline-block; border-radius: 4px; font-size: 10px; font-weight: 700; padding: 2px 8px; }
+/* GenAI Pricing */
+.gp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.gp-card { background: #fff; border-radius: 12px; box-shadow: 0 1px 5px rgba(13,27,44,0.08); padding: 16px; cursor: pointer; border: 2px solid transparent; transition: border-color .15s, box-shadow .15s; }
+.gp-card:hover { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+.gp-card.gp-rh { border-color: #2563eb; }
+.gp-name { font-size: 13px; font-weight: 700; color: #0d1929; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+.gp-hint { font-size: 10px; color: #94a3b8; font-weight: 400; }
+.gp-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #f1f5f9; }
+.gp-row:last-child { border-bottom: none; }
+.gp-tier { font-size: 10px; color: #64748b; }
+.gp-val  { font-size: 12px; font-weight: 700; color: #0d1929; }
+/* Pricing popup */
+.gp-overlay { display: none; position: fixed; inset: 0; background: rgba(13,27,44,0.55); z-index: 1000; align-items: center; justify-content: center; }
+.gp-overlay.open { display: flex; }
+.gp-popup { background: #fff; border-radius: 14px; width: 480px; max-height: 82vh; overflow: auto; box-shadow: 0 8px 40px rgba(13,27,44,0.25); }
+.gp-popup-head { background: #0d1929; color: #fff; padding: 16px 20px; border-radius: 14px 14px 0 0; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1; }
+.gp-popup-title { font-size: 14px; font-weight: 700; }
+.gp-popup-close { font-size: 24px; cursor: pointer; color: rgba(255,255,255,0.6); line-height: 1; background: none; border: none; padding: 0 2px; }
+.gp-popup-close:hover { color: #fff; }
+.gp-popup-body { padding: 18px 20px; }
+.gp-popup-sect { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .7px; color: #94a3b8; margin: 14px 0 6px; }
+.gp-popup-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid #f1f5f9; gap: 12px; }
+.gp-popup-row:last-child { border-bottom: none; }
+.gp-popup-label { font-size: 11px; color: #64748b; flex-shrink: 0; }
+.gp-popup-val { font-size: 11px; font-weight: 600; color: #0d1929; text-align: right; }
+.gp-popup-note { margin-top: 14px; background: #f4f7fc; border-radius: 8px; padding: 12px 14px; font-size: 11px; color: #475569; line-height: 1.65; }
+.gp-popup-src { display: block; margin-top: 10px; font-size: 10px; }
+.gp-popup-src a { color: #3b82f6; }
+/* GenAI Deal Intel */
+.gdi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px,1fr)); gap: 14px; }
+.gdi-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(13,27,44,0.08); padding: 14px 16px; border-left: 4px solid #e2e8f0; }
+.gdi-card.gdi-won    { border-left-color: #16a34a; }
+.gdi-card.gdi-lost   { border-left-color: #dc2626; }
+.gdi-card.gdi-active { border-left-color: #2563eb; }
+.gdi-card.gdi-paused { border-left-color: #d97706; }
+.gdi-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.gdi-name { font-size: 13px; font-weight: 700; color: #0d1929; }
+.gdi-meta { font-size: 10px; color: #94a3b8; margin-top: 2px; }
+.gdi-mrr { font-size: 13px; font-weight: 700; color: #0d1929; text-align: right; white-space: nowrap; }
+.gdi-mrr.high { color: #dc2626; }
+.gdi-mrr.med  { color: #d97706; }
+.gdi-pills { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 9px; }
+.gdi-pill { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+.gdi-pill.won    { background: #f0fdf4; color: #16a34a; }
+.gdi-pill.lost   { background: #fef2f2; color: #dc2626; }
+.gdi-pill.active { background: #eff6ff; color: #2563eb; }
+.gdi-pill.paused { background: #fffbeb; color: #d97706; }
+.gdi-pill.comp   { background: #f1f5f9; color: #475569; }
+.gdi-pill.ss     { background: #fdf4ff; color: #7e22ce; }
+.gdi-quote { font-size: 11px; color: #475569; line-height: 1.6; font-style: italic; margin-bottom: 9px; border-left: 3px solid #e4eaf6; padding-left: 10px; }
+.gdi-signal { font-size: 11px; color: #374151; line-height: 1.5; margin-bottom: 8px; }
+.gdi-action { font-size: 11px; color: #1e293b; line-height: 1.5; background: #f4f7fc; border-radius: 6px; padding: 8px 10px; }
+.gdi-action-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: #94a3b8; margin-bottom: 3px; }
+/* GenAI Battlecard */
+.gbc-outer { flex: 1; overflow: hidden; display: flex; flex-direction: column; padding: 18px 24px; }
+.gbc-scroll { flex: 1; overflow: auto; }
+.gbc-table { border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 5px rgba(13,27,44,0.08); min-width: 1000px; width: 100%; }
+.gbc-table thead th { background: #0d1929; color: #fff; font-size: 11px; font-weight: 700; padding: 10px 12px; text-align: left; position: sticky; top: 0; z-index: 2; min-width: 140px; vertical-align: bottom; }
+.gbc-table thead th:first-child { min-width: 160px; position: sticky; left: 0; z-index: 3; }
+.gbc-table thead th.gbc-rh { background: #1e3a5f; }
+.gbc-table tbody td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; font-size: 11px; color: #475569; line-height: 1.55; }
+.gbc-table tbody td:first-child { font-weight: 600; color: #1e293b; font-size: 11px; position: sticky; left: 0; background: #fff; z-index: 1; border-right: 1px solid #e4eaf6; white-space: nowrap; }
+.gbc-table tbody td.gbc-rh-cell { background: #f0f6ff; color: #1e293b; font-weight: 500; }
+.gbc-table tr.gbc-section td { background: #1e3a5f !important; color: #93c5fd; font-size: 9px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; padding: 5px 12px; }
+.gbc-table tr.gbc-section td:first-child { background: #1e3a5f !important; z-index: 1; }
+.gbc-table tbody tr:not(.gbc-section):hover td { background: #f8fafc; }
+.gbc-table tbody tr:not(.gbc-section):hover td.gbc-rh-cell { background: #e8f0fe; }
+.gbc-table tbody tr:not(.gbc-section):hover td:first-child { background: #f8fafc; }
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════
-     SIDEBAR
-     ════════════════════════════════════════════ -->
 <div class="sidebar">
   <div class="sidebar-brand">
-    <svg class="brand-logo" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.278 15.9675" aria-label="ROI Hunter"><defs><style>.cls-1{fill:#fff;}</style></defs><path class="cls-1" d="M2.1616.276A14.9191,14.9191,0,0,0,0,.5734V15.6369H2.78V9.8594h1.764c.1468,0,.3233-.0085.53-.0224q.4181.5295.9042,1.2013.4845.674.9815,1.4344T7.94,14.0388q.4845.8038.9042,1.5981h3.11q-.3972-.86-.9045-1.7532T9.9916,12.1422q-.5517-.8505-1.0807-1.5778T7.9623,9.33a4.1668,4.1668,0,0,0,3.0661-4.2135A4.197,4.197,0,0,0,9.2746,1.412,8.8606,8.8606,0,0,0,4.2128.1979q-.9046,0-2.0512.0781m3.75,2.4475a3.6009,3.6009,0,0,1,1.18.4086,1.9568,1.9568,0,0,1,.7613.7723A2.4552,2.4552,0,0,1,8.1167,5.095a2.5583,2.5583,0,0,1-.2646,1.2344,1.9231,1.9231,0,0,1-.783.7724,3.7358,3.7358,0,0,1-1.2906.3968,12.7318,12.7318,0,0,1-1.7864.11H2.78v-4.94q.749-.0657,1.6321-.0663a8.6619,8.6619,0,0,1,1.5.1209m9.4842,2.9887A5.1279,5.1279,0,0,1,16.2889,3.97a3.9825,3.9825,0,0,1,1.4222-1.1243,4.369,4.369,0,0,1,1.8966-.3968,4.3153,4.3153,0,0,1,1.8748.3968A4.0435,4.0435,0,0,1,22.9053,3.959a5.013,5.013,0,0,1,.8935,1.7425,7.9,7.9,0,0,1,.3088,2.2828,7.9045,7.9045,0,0,1-.3088,2.2827,5.013,5.013,0,0,1-.8935,1.7425,4.056,4.056,0,0,1-1.4228,1.1136,4.3312,4.3312,0,0,1-1.8748.3969,4.3849,4.3849,0,0,1-1.8966-.3969A4.05,4.05,0,0,1,16.2889,12.01a4.9927,4.9927,0,0,1-.8935-1.7425,7.901,7.901,0,0,1-.3089-2.2827,7.79,7.79,0,0,1,.3089-2.2721m11.0278-1.18A7.4253,7.4253,0,0,0,24.824,2.0292,6.5023,6.5023,0,0,0,22.4755.507a8.2372,8.2372,0,0,0-5.69,0,6.7069,6.7069,0,0,0-2.371,1.5222,7.25,7.25,0,0,0-1.6212,2.5031,9.2476,9.2476,0,0,0-.5953,3.452,9.3327,9.3327,0,0,0,.5953,3.4626A7.29,7.29,0,0,0,14.3915,13.95a6.5242,6.5242,0,0,0,2.36,1.51,8.13,8.13,0,0,0,2.8785.5071,8.0419,8.0419,0,0,0,2.8674-.5071,6.5463,6.5463,0,0,0,2.349-1.51,7.1557,7.1557,0,0,0,1.5877-2.5031,9.4975,9.4975,0,0,0,.5844-3.4626,9.2456,9.2456,0,0,0-.5954-3.452M28.96,15.6369h2.7791V.353H28.96V15.6369ZM44.244,6.9916H35.9514V.353h-1.5V15.6369h1.5V8.2923H44.244v7.3446h1.5V.353h-1.5V6.9916Zm12.4723,8.5137a4.466,4.466,0,0,0,1.7313-1.2793,5.145,5.145,0,0,0,.9595-1.9073A8.9146,8.9146,0,0,0,59.7045,9.97V.353h-1.5V9.7707a7.0585,7.0585,0,0,1-.298,2.1725,4.1911,4.1911,0,0,1-.827,1.51,3.2051,3.2051,0,0,1-1.28.8825,5.04,5.04,0,0,1-3.3518,0,3.2062,3.2062,0,0,1-1.2788-.8825,4.2,4.2,0,0,1-.828-1.51,7.075,7.075,0,0,1-.2973-2.1725V.353h-1.5V9.97a8.91,8.91,0,0,0,.2978,2.3491,5.1347,5.1347,0,0,0,.96,1.9073,4.4579,4.4579,0,0,0,1.7313,1.2793,7.4965,7.4965,0,0,0,5.1831,0m17.4565.1316V.353H72.6951v12.44q-.686-1.2114-1.7569-2.8422T68.6308,6.61q-1.2357-1.7073-2.5216-3.3546T63.6966.353H62.5054V15.6369h1.4782V2.763q.6285.7511,1.4388,1.7843t1.6567,2.2143q.8471,1.1825,1.7012,2.4325t1.64,2.4207q.7863,1.1713,1.4279,2.2132t1.0674,1.8089ZM75.4522.353V1.6538h4.8969V15.6369h1.4995V1.6538h4.8958V.353ZM97.4194,15.6369V14.3361H89.5239V8.2485h6.5279V6.9691H89.5239V1.6538H96.846V.353H88.0238V15.6369ZM107.7526,1.412A7.9034,7.9034,0,0,0,102.9993.22q-.9045,0-1.9739.0994a10.6871,10.6871,0,0,0-1.8638.32V15.6369h1.5V9.4615h2.4706q.7057,0,1.4114-.0663.3967.53.9267,1.2355t1.0915,1.5329q.5628.828,1.1036,1.7093.5389.8826,1.0034,1.764h1.61a19.16,19.16,0,0,0-.97-1.8516q-.5751-.9708-1.17-1.8645-.5956-.8922-1.1578-1.6431c-.3746-.4995-.6808-.8964-.9146-1.1906a5.1136,5.1136,0,0,0,2.3808-1.4345,3.8707,3.8707,0,0,0,.9053-2.7127,4.1215,4.1215,0,0,0-1.5993-3.5279m-2.8682.2535a4.1816,4.1816,0,0,1,1.4673.5295,3.0214,3.0214,0,0,1,1.0373,1.0473,3.2208,3.2208,0,0,1,.3965,1.6762,3.2938,3.2938,0,0,1-.3965,1.7425,2.6421,2.6421,0,0,1-1.0812.981,4.6786,4.6786,0,0,1-1.61.4417,18.3945,18.3945,0,0,1-1.9629.0984h-2.0735V1.6762c.2793-.0289.6287-.0631,1.0477-.0995s.9081-.0556,1.4662-.0556a10.0166,10.0166,0,0,1,1.7093.1444"/></svg>
+    <svg class="brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110.278 15.9675" aria-label="ROI Hunter"><defs><style>.cls-1{fill:#fff;}</style></defs><path class="cls-1" d="M2.1616.276A14.9191,14.9191,0,0,0,0,.5734V15.6369H2.78V9.8594h1.764c.1468,0,.3233-.0085.53-.0224q.4181.5295.9042,1.2013.4845.674.9815,1.4344T7.94,14.0388q.4845.8038.9042,1.5981h3.11q-.3972-.86-.9045-1.7532T9.9916,12.1422q-.5517-.8505-1.0807-1.5778T7.9623,9.33a4.1668,4.1668,0,0,0,3.0661-4.2135A4.197,4.197,0,0,0,9.2746,1.412,8.8606,8.8606,0,0,0,4.2128.1979q-.9046,0-2.0512.0781m3.75,2.4475a3.6009,3.6009,0,0,1,1.18.4086,1.9568,1.9568,0,0,1,.7613.7723A2.4552,2.4552,0,0,1,8.1167,5.095a2.5583,2.5583,0,0,1-.2646,1.2344,1.9231,1.9231,0,0,1-.783.7724,3.7358,3.7358,0,0,1-1.2906.3968,12.7318,12.7318,0,0,1-1.7864.11H2.78v-4.94q.749-.0657,1.6321-.0663a8.6619,8.6619,0,0,1,1.5.1209m9.4842,2.9887A5.1279,5.1279,0,0,1,16.2889,3.97a3.9825,3.9825,0,0,1,1.4222-1.1243,4.369,4.369,0,0,1,1.8966-.3968,4.3153,4.3153,0,0,1,1.8748.3968A4.0435,4.0435,0,0,1,22.9053,3.959a5.013,5.013,0,0,1,.8935,1.7425,7.9,7.9,0,0,1,.3088,2.2828,7.9045,7.9045,0,0,1-.3088,2.2827,5.013,5.013,0,0,1-.8935,1.7425,4.056,4.056,0,0,1-1.4228,1.1136,4.3312,4.3312,0,0,1-1.8748.3969,4.3849,4.3849,0,0,1-1.8966-.3969A4.05,4.05,0,0,1,16.2889,12.01a4.9927,4.9927,0,0,1-.8935-1.7425,7.901,7.901,0,0,1-.3089-2.2827,7.79,7.79,0,0,1,.3089-2.2721m11.0278-1.18A7.4253,7.4253,0,0,0,24.824,2.0292,6.5023,6.5023,0,0,0,22.4755.507a8.2372,8.2372,0,0,0-5.69,0,6.7069,6.7069,0,0,0-2.371,1.5222,7.25,7.25,0,0,0-1.6212,2.5031,9.2476,9.2476,0,0,0-.5953,3.452,9.3327,9.3327,0,0,0,.5953,3.4626A7.29,7.29,0,0,0,14.3915,13.95a6.5242,6.5242,0,0,0,2.36,1.51,8.13,8.13,0,0,0,2.8785.5071,8.0419,8.0419,0,0,0,2.8674-.5071,6.5463,6.5463,0,0,0,2.349-1.51,7.1557,7.1557,0,0,0,1.5877-2.5031,9.4975,9.4975,0,0,0,.5844-3.4626,9.2456,9.2456,0,0,0-.5954-3.452M28.96,15.6369h2.7791V.353H28.96V15.6369ZM44.244,6.9916H35.9514V.353h-1.5V15.6369h1.5V8.2923H44.244v7.3446h1.5V.353h-1.5V6.9916Zm12.4723,8.5137a4.466,4.466,0,0,0,1.7313-1.2793,5.145,5.145,0,0,0,.9595-1.9073A8.9146,8.9146,0,0,0,59.7045,9.97V.353h-1.5V9.7707a7.0585,7.0585,0,0,1-.298,2.1725,4.1911,4.1911,0,0,1-.827,1.51,3.2051,3.2051,0,0,1-1.28.8825,5.04,5.04,0,0,1-3.3518,0,3.2062,3.2062,0,0,1-1.2788-.8825,4.2,4.2,0,0,1-.828-1.51,7.075,7.075,0,0,1-.2973-2.1725V.353h-1.5V9.97a8.91,8.91,0,0,0,.2978,2.3491,5.1347,5.1347,0,0,0,.96,1.9073,4.4579,4.4579,0,0,0,1.7313,1.2793,7.4965,7.4965,0,0,0,5.1831,0m17.4565.1316V.353H72.6951v12.44q-.686-1.2114-1.7569-2.8422T68.6308,6.61q-1.2357-1.7073-2.5216-3.3546T63.6966.353H62.5054V15.6369h1.4782V2.763q.6285.7511,1.4388,1.7843t1.6567,2.2143q.8471,1.1825,1.7012,2.4325t1.64,2.4207q.7863,1.1713,1.4279,2.2132t1.0674,1.8089ZM75.4522.353V1.6538h4.8969V15.6369h1.4995V1.6538h4.8958V.353ZM97.4194,15.6369V14.3361H89.5239V8.2485h6.5279V6.9691H89.5239V1.6538H96.846V.353H88.0238V15.6369ZM107.7526,1.412A7.9034,7.9034,0,0,0,102.9993.22q-.9045,0-1.9739.0994a10.6871,10.6871,0,0,0-1.8638.32V15.6369h1.5V9.4615h2.4706q.7057,0,1.4114-.0663.3967.53.9267,1.2355t1.0915,1.5329q.5628.828,1.1036,1.7093.5389.8826,1.0034,1.764h1.61a19.16,19.16,0,0,0-.97-1.8516q-.5751-.9708-1.17-1.8645-.5956-.8922-1.1578-1.6431c-.3746-.4995-.6808-.8964-.9146-1.1906a5.1136,5.1136,0,0,0,2.3808-1.4345,3.8707,3.8707,0,0,0,.9053-2.7127,4.1215,4.1215,0,0,0-1.5993-3.5279m-2.8682.2535a4.1816,4.1816,0,0,1,1.4673.5295,3.0214,3.0214,0,0,1,1.0373,1.0473,3.2208,3.2208,0,0,1,.3965,1.6762,3.2938,3.2938,0,0,1-.3965,1.7425,2.6421,2.6421,0,0,1-1.0812.981,4.6786,4.6786,0,0,1-1.61.4417,18.3945,18.3945,0,0,1-1.9629.0984h-2.0735V1.6762c.2793-.0289.6287-.0631,1.0477-.0995s.9081-.0556,1.4662-.0556a10.0166,10.0166,0,0,1,1.7093.1444"/></svg>
     <div class="brand-sub">Product Intel Toolkit</div>
   </div>
-
   <nav class="sidebar-nav">
     <div class="nav-tool">
       <div class="nav-tool-label">🥊 Competitor Analysis</div>
@@ -227,20 +243,18 @@ td:not(:first-child) { text-align: center; }
       <button class="nav-item" data-title="Sources" onclick="go('src', this)">
         <span class="ni">🔗</span> Sources
       </button>
+      <button class="nav-item" data-title="GenAI Comparison" onclick="go('genai', this)">
+        <span class="ni">🤖</span> GenAI Comparison
+      </button>
     </div>
     <div class="nav-divider"></div>
   </nav>
-
   <div class="sidebar-footer">
     <span id="syncBadge" class="sync-badge">Loading data…</span>
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════
-     MAIN CONTENT
-     ════════════════════════════════════════════ -->
 <div class="main">
-  <!-- TOP BAR -->
   <div class="topbar">
     <div class="topbar-left">
       <span class="page-title" id="pageTitle">Competitive Overview</span>
@@ -294,32 +308,71 @@ td:not(:first-child) { text-align: center; }
       </div>
     </div>
 
+    <!-- PANEL 5: GENAI COMPARISON -->
+    <div id="panel-genai" class="panel">
+      <div class="genai-tabs">
+        <span class="genai-tab on"  onclick="switchGenAITab('matrix',     this)">🔬 Feature Matrix</span>
+        <span class="genai-tab"     onclick="switchGenAITab('pricing',    this)">💰 Pricing at scale</span>
+        <span class="genai-tab"     onclick="switchGenAITab('intel',      this)">🎯 Deal intelligence</span>
+        <span class="genai-tab"     onclick="switchGenAITab('battlecard', this)">⚔️ Sales battlecard</span>
+      </div>
+
+      <!-- GenAI Feature Matrix -->
+      <div id="gsub-matrix" class="genai-sub on">
+        <div class="gm-outer">
+          <div class="gm-status" id="gmStatus"><span class="spinner"></span> Loading GenAI data…</div>
+          <div class="gm-scroll"><div id="gmWrap"></div></div>
+        </div>
+      </div>
+
+      <!-- GenAI Pricing at scale -->
+      <div id="gsub-pricing" class="genai-sub">
+        <div class="scroll">
+          <div style="font-size:11px;color:#64748b;margin-bottom:16px">Click any vendor card to see the full pricing breakdown, billing model, and notes.</div>
+          <div class="gp-grid" id="gpGrid"></div>
+        </div>
+      </div>
+
+      <!-- GenAI Deal Intelligence -->
+      <div id="gsub-intel" class="genai-sub">
+        <div class="filters" id="gdiFilters">
+          <span class="flabel">Status</span>
+          <span class="chip on" onclick="filterGDI(this,'status','all')">All</span>
+          <span class="chip" onclick="filterGDI(this,'status','Active')">Active</span>
+          <span class="chip" onclick="filterGDI(this,'status','Closed Won')">✅ Won</span>
+          <span class="chip" onclick="filterGDI(this,'status','Closed Lost')">✗ Lost</span>
+          <span class="chip" onclick="filterGDI(this,'status','Paused')">⏸ Paused</span>
+          <div class="sep"></div>
+          <span class="flabel">Region</span>
+          <span id="gdiRegionChips"><span class="chip on" onclick="filterGDI(this,'region','all')">All</span></span>
+        </div>
+        <div class="scroll-with-filters"><div class="gdi-grid" id="gdiGrid"></div></div>
+      </div>
+
+      <!-- GenAI Sales Battlecard -->
+      <div id="gsub-battlecard" class="genai-sub">
+        <div class="gbc-outer">
+          <div class="gbc-scroll"><div id="gbcWrap"></div></div>
+        </div>
+      </div>
+    </div>
+
   </div><!-- /content -->
 </div><!-- /main -->
 
-<!-- PapaParse for reliable CSV parsing -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<!-- Pricing detail popup -->
+<div class="gp-overlay" id="gpOverlay" onclick="if(event.target===this)closeGPPopup()">
+  <div class="gp-popup">
+    <div class="gp-popup-head">
+      <div class="gp-popup-title" id="gpPopupTitle">Pricing detail</div>
+      <button class="gp-popup-close" onclick="closeGPPopup()">×</button>
+    </div>
+    <div class="gp-popup-body" id="gpPopupBody"></div>
+  </div>
+</div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script>
-// ═══════════════════════════════════════════════════════════════════════════
-//  ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗
-// ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝
-// ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗
-// ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║
-// ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝
-//  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝
-//
-// HOW TO CONNECT YOUR GOOGLE SHEETS:
-// ─────────────────────────────────────────────────────────────────────────
-// 1. Open your Google Sheet
-// 2. For EACH tab (Matrix, Intel, Overview, Sources):
-//    a. Go to File → Share → Publish to web
-//    b. Select the specific sheet tab from the dropdown
-//    c. Choose "Comma-separated values (.csv)" as the format
-//    d. Click "Publish" and copy the URL
-// 3. Paste each URL in the CSV_URLS object below
-// 4. Commit your index.html to GitHub — the page fetches live data on every load
-// ─────────────────────────────────────────────────────────────────────────
 
 const CSV_URLS = {
   matrix:   'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmGtSGM_4tlLeMWFfBJ2faQDlm4JyXRmitVhslNc5z3QBfNJFg3zS-vn5Fz5dgQGxLCSqyvyUmqxn2/pub?gid=400335014&single=true&output=csv',
@@ -328,95 +381,86 @@ const CSV_URLS = {
   sources:  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmGtSGM_4tlLeMWFfBJ2faQDlm4JyXRmitVhslNc5z3QBfNJFg3zS-vn5Fz5dgQGxLCSqyvyUmqxn2/pub?gid=1810612015&single=true&output=csv',
 };
 
-// Local CSV fallback paths (used when Google Sheets can't be reached,
-// e.g. in local preview). Commit the data/ folder alongside index.html
-// to enable this fallback.
-const CSV_LOCAL = {
-  matrix:   './data/matrix.csv',
-  intel:    './data/intel.csv',
-  overview: './data/overview.csv',
-  sources:  './data/sources.csv',
+const GENAI_URLS = {
+  matrix:     'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmGtSGM_4tlLeMWFfBJ2faQDlm4JyXRmitVhslNc5z3QBfNJFg3zS-vn5Fz5dgQGxLCSqyvyUmqxn2/pub?gid=3355041&single=true&output=csv',
+  pricing:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmGtSGM_4tlLeMWFfBJ2faQDlm4JyXRmitVhslNc5z3QBfNJFg3zS-vn5Fz5dgQGxLCSqyvyUmqxn2/pub?gid=1153794791&single=true&output=csv',
+  intel:      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmGtSGM_4tlLeMWFfBJ2faQDlm4JyXRmitVhslNc5z3QBfNJFg3zS-vn5Fz5dgQGxLCSqyvyUmqxn2/pub?gid=889091415&single=true&output=csv',
+  battlecard: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmGtSGM_4tlLeMWFfBJ2faQDlm4JyXRmitVhslNc5z3QBfNJFg3zS-vn5Fz5dgQGxLCSqyvyUmqxn2/pub?gid=1057330389&single=true&output=csv',
 };
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ─── STATE ────────────────────────────────────────────────────────────────
+let INTEL = [], OVERVIEW = [], SOURCES = [], matrixSections = [];
+let activeCat = 'all', intelComp = 'all', intelUrgency = 'all';
+let GENAI_MATRIX = [], GENAI_PRICING = [], GENAI_INTEL = [], GENAI_BATTLECARD = [];
+let gdiStatus = 'all', gdiRegion = 'all';
 
-// ─── STATE ───────────────────────────────────────────────────────────────
-let INTEL          = [];
-let OVERVIEW       = [];
-let SOURCES        = [];
-let matrixSections = [];
-let activeCat      = 'all';
-let intelComp      = 'all';
-let intelUrgency   = 'all';
-
-// ─── CSV FETCH ────────────────────────────────────────────────────────────
-// Fetches a URL and parses it as CSV, returning an array of row objects.
+// ─── CSV HELPERS ──────────────────────────────────────────────────────────
 function parseCSVText(text) {
   return new Promise((resolve, reject) => {
     Papa.parse(text, {
-      header: true,
-      skipEmptyLines: true,
+      header: true, skipEmptyLines: true,
       transformHeader: h => h.trim(),
       transform: v => v.trim(),
-      complete: result => resolve(result.data),
-      error: reject,
+      complete: r => resolve(r.data), error: reject,
     });
   });
 }
 
 async function fetchCSV(url) {
-  // Always append a unique timestamp so the browser and any CDN proxy
-  // treat every request as brand-new and never serve a cached copy.
-  const bustUrl = `${url}${url.includes('?') ? '&' : '?'}_t=${Date.now()}`;
-  const res = await fetch(bustUrl, {
-    cache: 'no-store',   // never read from or write to the browser cache
-    headers: {
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Pragma': 'no-cache',
-    },
-  });
+  const bust = `${url}${url.includes('?') ? '&' : '?'}_t=${Date.now()}`;
+  const res = await fetch(bust, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' } });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const text = await res.text();
   if (!text.trim()) throw new Error('Empty response');
   return parseCSVText(text);
 }
 
-// Fetch from Google Sheets only. No local fallback — local files are
-// frozen at creation time and would silently show stale data on reload.
 async function fetchCSVWithFallback(name) {
-  const remoteUrl = CSV_URLS[name];
-  if (remoteUrl.startsWith('PASTE_')) {
-    throw new Error(`"${name}" Google Sheets URL not configured yet`);
-  }
-  const data = await fetchCSV(remoteUrl);
-  return { data, source: 'sheets' };
+  const url = CSV_URLS[name];
+  if (!url || url.startsWith('PASTE_')) throw new Error(`"${name}" URL not configured`);
+  return { data: await fetchCSV(url), source: 'sheets' };
 }
 
-// ─── LOAD ALL DATA ────────────────────────────────────────────────────────
+// GenAI sheets have a title row 1; real headers are on row 2.
+// Also normalise multi-line column headers (newlines → space).
+function parseGenAICSVText(text) {
+  return new Promise((resolve, reject) => {
+    const clean = text.split('\n').slice(1).join('\n');
+    Papa.parse(clean, {
+      header: true, skipEmptyLines: true,
+      transformHeader: h => h.trim().replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' '),
+      transform: v => v.trim(),
+      complete: r => resolve(r.data), error: reject,
+    });
+  });
+}
+
+async function fetchGenAICSV(url) {
+  const bust = `${url}${url.includes('?') ? '&' : '?'}_t=${Date.now()}`;
+  const res = await fetch(bust, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' } });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const text = await res.text();
+  if (!text.trim()) throw new Error('Empty response');
+  return parseGenAICSVText(text);
+}
+
+// ─── MAIN DATA LOAD ───────────────────────────────────────────────────────
 async function loadAllData() {
   const status = document.getElementById('matrixStatus');
   const badge  = document.getElementById('syncBadge');
-
   status.innerHTML = '<span class="spinner"></span> Loading data…';
-  badge.textContent = 'Loading…';
-  badge.className = 'sync-badge';
+  badge.textContent = 'Loading…'; badge.className = 'sync-badge';
 
   try {
     const [matrixRes, intelRes, overviewRes, sourcesRes] = await Promise.all([
-      fetchCSVWithFallback('matrix'),
-      fetchCSVWithFallback('intel'),
-      fetchCSVWithFallback('overview'),
-      fetchCSVWithFallback('sources'),
+      fetchCSVWithFallback('matrix'), fetchCSVWithFallback('intel'),
+      fetchCSVWithFallback('overview'), fetchCSVWithFallback('sources'),
     ]);
+    const matrixRows = matrixRes.data, intelRows = intelRes.data,
+          overviewRows = overviewRes.data, sourcesRows = sourcesRes.data;
 
-    const matrixRows   = matrixRes.data;
-    const intelRows    = intelRes.data;
-    const overviewRows = overviewRes.data;
-    const sourcesRows  = sourcesRes.data;
-
-    // ── Parse matrix ──
-    const sectionMap = {};
-    const sectionOrder = [];
+    // Parse matrix
+    const sectionMap = {}, sectionOrder = [];
     for (const row of matrixRows) {
       if (!row.section_name) continue;
       if (!sectionMap[row.section_name]) {
@@ -424,151 +468,130 @@ async function loadAllData() {
         sectionOrder.push(row.section_name);
       }
       sectionMap[row.section_name].rows.push({
-        f:  row.feature,
-        rh: row.rh, hu: row.hu, sm: row.sm,
-        ma: row.ma, co: row.co, ad: row.ad,
-        _src: {
-          rh: row.src_rh || '', hu: row.src_hu || '',
-          sm: row.src_sm || '', ma: row.src_ma || '',
-          co: row.src_co || '', ad: row.src_ad || '',
-        },
+        f: row.feature, rh: row.rh, hu: row.hu, sm: row.sm, ma: row.ma, co: row.co, ad: row.ad,
+        _src: { rh: row.src_rh||'', hu: row.src_hu||'', sm: row.src_sm||'', ma: row.src_ma||'', co: row.src_co||'', ad: row.src_ad||'' },
       });
     }
     matrixSections = sectionOrder.map(n => sectionMap[n]);
 
-    // ── Parse intel ──
-    INTEL = intelRows.map(r => ({
-      week: r.week, c: r.competitor, cat: r.category,
-      u: r.urgency, date: r.date, f: r.finding,
-      src: r.source_label, url: r.source_url,
-    }));
+    // Parse intel
+    INTEL = intelRows.map(r => ({ week: r.week, c: r.competitor, cat: r.category, u: r.urgency, date: r.date, f: r.finding, src: r.source_label, url: r.source_url }));
 
-    // ── Parse overview ──
-    const ovMap = {};
-    const ovOrder = [];
+    // Parse overview
+    const ovMap = {}, ovOrder = [];
     for (const row of overviewRows) {
       if (!row.competitor) continue;
-      if (!ovMap[row.competitor]) {
-        ovMap[row.competitor] = { name: row.competitor, wins: [], loses: [], pricing: '', news: '' };
-        ovOrder.push(row.competitor);
-      }
-      const t = (row.type || '').toLowerCase();
-      if      (t === 'win')     ovMap[row.competitor].wins.push(row.content);
-      else if (t === 'lose')    ovMap[row.competitor].loses.push(row.content);
-      else if (t === 'pricing') ovMap[row.competitor].pricing = row.content;
-      else if (t === 'news')    ovMap[row.competitor].news = row.content;
+      if (!ovMap[row.competitor]) { ovMap[row.competitor] = { name: row.competitor, wins: [], loses: [], pricing: '', news: '' }; ovOrder.push(row.competitor); }
+      const t = (row.type||'').toLowerCase();
+      if (t==='win') ovMap[row.competitor].wins.push(row.content);
+      else if (t==='lose') ovMap[row.competitor].loses.push(row.content);
+      else if (t==='pricing') ovMap[row.competitor].pricing = row.content;
+      else if (t==='news') ovMap[row.competitor].news = row.content;
     }
     OVERVIEW = ovOrder.map(n => ovMap[n]);
 
-    // ── Parse sources ──
-    const srcMap = {};
-    const srcOrder = [];
+    // Parse sources
+    const srcMap = {}, srcOrder = [];
     for (const row of sourcesRows) {
       if (!row.competitor) continue;
-      if (!srcMap[row.competitor]) {
-        srcMap[row.competitor] = { name: row.competitor, items: [] };
-        srcOrder.push(row.competitor);
-      }
-      srcMap[row.competitor].items.push({
-        must: (row.priority || '').toLowerCase() === 'must',
-        url:  row.url, label: row.label, desc: row.description,
-      });
+      if (!srcMap[row.competitor]) { srcMap[row.competitor] = { name: row.competitor, items: [] }; srcOrder.push(row.competitor); }
+      srcMap[row.competitor].items.push({ must: (row.priority||'').toLowerCase()==='must', url: row.url, label: row.label, desc: row.description });
     }
     SOURCES = srcOrder.map(n => srcMap[n]);
 
-    // ── Build dynamic filter chips ──
-    buildIntelCompChips();
-    buildMatrixCatChips();
+    buildIntelCompChips(); buildMatrixCatChips();
+    activeCat = 'all'; intelComp = 'all'; intelUrgency = 'all';
+    renderOverview(); renderIntel(); renderSources(); renderMatrix();
 
-    // ── Reset filter state & render ──
-    activeCat    = 'all';
-    intelComp    = 'all';
-    intelUrgency = 'all';
-
-    renderOverview();
-    renderIntel();
-    renderSources();
-    renderMatrix();
-
-    // ── Update status ──
-    const d = new Date().toLocaleString('en-US', {
-      month: 'short', day: 'numeric', year: 'numeric',
-      hour: '2-digit', minute: '2-digit',
-    });
+    const d = new Date().toLocaleString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' });
     status.innerHTML = `<span style="color:#16a34a">✓</span> Live from Google Sheets · Fetched ${d}`;
-    badge.textContent = `✓ Fetched ${d}`;
-    badge.className = 'sync-badge ok';
-
+    badge.textContent = `✓ Fetched ${d}`; badge.className = 'sync-badge ok';
   } catch (err) {
     console.error('Data load error:', err);
-    status.innerHTML = `
-      <span style="color:#dc2626">✗</span> Failed to load from Google Sheets: ${err.message || err}
-      &nbsp;<button onclick="loadAllData()" style="font-size:10px;padding:2px 8px;border:1px solid #dc2626;
-        color:#dc2626;background:#fff;border-radius:4px;cursor:pointer;margin-left:6px">↻ Retry</button>`;
-    badge.textContent = '✗ Load failed';
-    badge.className = 'sync-badge err';
+    status.innerHTML = `<span style="color:#dc2626">✗</span> Failed: ${err.message||err} &nbsp;<button onclick="loadAllData()" style="font-size:10px;padding:2px 8px;border:1px solid #dc2626;color:#dc2626;background:#fff;border-radius:4px;cursor:pointer">↻ Retry</button>`;
+    badge.textContent = '✗ Load failed'; badge.className = 'sync-badge err';
+  }
+
+  loadGenAIData(); // independent, won't block main data
+}
+
+// ─── GENAI DATA LOAD ──────────────────────────────────────────────────────
+async function loadGenAIData() {
+  const gmStatus = document.getElementById('gmStatus');
+  try {
+    const [mData, pData, iData, bData] = await Promise.all([
+      fetchGenAICSV(GENAI_URLS.matrix),   fetchGenAICSV(GENAI_URLS.pricing),
+      fetchGenAICSV(GENAI_URLS.intel),    fetchGenAICSV(GENAI_URLS.battlecard),
+    ]);
+    GENAI_MATRIX    = mData.filter(r => r['Vendor'] && r['Vendor'].trim() && r['Vendor'] !== 'Vendor');
+    GENAI_PRICING   = pData.filter(r => r['Vendor'] && r['Vendor'].trim() && r['Vendor'] !== 'Vendor');
+    GENAI_INTEL     = iData.filter(r => r['Company'] && r['Company'].trim() && !r['Company'].startsWith('Status'));
+    GENAI_BATTLECARD = bData.filter(r => r['Dimension'] && r['Dimension'].trim());
+
+    buildGDIRegionChips();
+    renderGenAIMatrix(); renderGenAIPricing(); renderGenAIIntel(); renderGenAIBattlecard();
+    if (gmStatus) gmStatus.style.display = 'none';
+  } catch (err) {
+    console.error('GenAI load error:', err);
+    if (gmStatus) gmStatus.innerHTML = `<span style="color:#dc2626">✗</span> Failed to load GenAI data: ${err.message||err}`;
   }
 }
 
-// ─── DYNAMIC CHIP BUILDERS ────────────────────────────────────────────────
+// ─── CHIP BUILDERS ────────────────────────────────────────────────────────
 function buildIntelCompChips() {
   const competitors = [...new Set(INTEL.map(i => i.c))].sort();
   document.getElementById('intelCompChips').innerHTML =
     `<span class="chip on" onclick="filterIntel(this,'comp','all')">All</span>` +
-    competitors.map(c =>
-      `<span class="chip" onclick="filterIntel(this,'comp','${c}')">${c}</span>`
-    ).join('');
+    competitors.map(c => `<span class="chip" onclick="filterIntel(this,'comp','${c}')">${c}</span>`).join('');
 }
-
 function buildMatrixCatChips() {
   const cats = [...new Set(matrixSections.map(s => s.cat))];
   document.getElementById('matrixCatChips').innerHTML =
     `<span class="chip on" onclick="filterMatrix(this,'all')">All</span>` +
-    cats.map(c =>
-      `<span class="chip" onclick="filterMatrix(this,'${c}')">${c}</span>`
-    ).join('');
+    cats.map(c => `<span class="chip" onclick="filterMatrix(this,'${c}')">${c}</span>`).join('');
+}
+function buildGDIRegionChips() {
+  const regions = [...new Set(GENAI_INTEL.map(r => r['Region']).filter(Boolean))].sort();
+  document.getElementById('gdiRegionChips').innerHTML =
+    `<span class="chip on" onclick="filterGDI(this,'region','all')">All</span>` +
+    regions.map(r => `<span class="chip" onclick="filterGDI(this,'region','${r}')">${r}</span>`).join('');
 }
 
-// ─── BADGE HELPER ─────────────────────────────────────────────────────────
+// ─── BADGE HELPERS ────────────────────────────────────────────────────────
 function badge(v, url) {
-  const s = (v || '').trim().toUpperCase().replace(/[\s,]+/g, '');
-  const cleanUrl = (url || '').trim();
-  const map = {
-    'TRUE':      ['bT',  'TRUE'],
-    'YESBUT':    ['bYB', 'YES,BUT'],
-    'NOBUT':     ['bNB', 'NO,BUT'],
-    'NO':        ['bN',  'NO'],
-    '?':         ['bQ',  '?'],
-    'AUTOMATIC': ['bA',  'AUTO'],
-    'MANUAL':    ['bM',  'MANUAL'],
-    'YES':       ['bT',  'YES'],
-  };
+  const s = (v||'').trim().toUpperCase().replace(/[\s,]+/g,'');
+  const cleanUrl = (url||'').trim();
+  const map = { 'TRUE':['bT','TRUE'], 'YESBUT':['bYB','YES,BUT'], 'NOBUT':['bNB','NO,BUT'], 'NO':['bN','NO'], '?':['bQ','?'], 'AUTOMATIC':['bA','AUTO'], 'MANUAL':['bM','MANUAL'], 'YES':['bT','YES'] };
   const hit = map[s];
   if (hit) {
     const [cls, label] = hit;
     const span = `<span class="b ${cls}">${label}</span>`;
-    if (cleanUrl) {
-      return `<a href="${cleanUrl}" target="_blank" rel="noopener" class="badge-link" title="View source">${span}</a>`;
-    }
-    return span;
+    return cleanUrl ? `<a href="${cleanUrl}" target="_blank" rel="noopener" class="badge-link" title="View source">${span}</a>` : span;
   }
-  // Non-standard text value — render as small text badge
-  const spanS = `<span class="b bS">${(v || '').replace(/\n/g, '<br>')}</span>`;
-  if (cleanUrl) {
-    return `<a href="${cleanUrl}" target="_blank" rel="noopener" class="badge-link" title="View source">${spanS}</a>`;
-  }
-  return spanS;
+  const spanS = `<span class="b bS">${(v||'').replace(/\n/g,'<br>')}</span>`;
+  return cleanUrl ? `<a href="${cleanUrl}" target="_blank" rel="noopener" class="badge-link" title="View source">${spanS}</a>` : spanS;
+}
+
+function gBadge(v) {
+  const raw = (v||'').trim();
+  const u = raw.toUpperCase();
+  if (u.startsWith('YES') || u === 'TRUE')  return '<span class="bGY">Yes</span>';
+  if (u.startsWith('NO')  || u === 'FALSE') return '<span class="bGN">No</span>';
+  if (u.startsWith('PARTIAL'))              return '<span class="bGP">Partial</span>';
+  if (!raw || u === 'UNKNOWN' || u === '?') return '<span class="bGQ">?</span>';
+  const display = raw.split('\n')[0].slice(0, 18);
+  return `<span class="bGQ" title="${raw.replace(/"/g,'&quot;').replace(/\n/g,' ')}">${display}${raw.length > 18 ? '…' : ''}</span>`;
 }
 
 function pill(u) {
-  if (u === 'urgent') return '<span class="pill pill-urgent">🚨 Urgent</span>';
-  if (u === 'watch')  return '<span class="pill pill-watch">⚠️ Watch</span>';
-  if (u === 'updated')return '<span class="pill pill-updated">🔵 Updated</span>';
-  if (u === 'new')    return '<span class="pill pill-new">★ New</span>';
+  if (u==='urgent') return '<span class="pill pill-urgent">🚨 Urgent</span>';
+  if (u==='watch')  return '<span class="pill pill-watch">⚠️ Watch</span>';
+  if (u==='updated')return '<span class="pill pill-updated">🔵 Updated</span>';
+  if (u==='new')    return '<span class="pill pill-new">★ New</span>';
   return '';
 }
 
-// ─── SIDEBAR NAV ──────────────────────────────────────────────────────────
+// ─── NAV ──────────────────────────────────────────────────────────────────
 function go(id, el) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('on'));
   el.classList.add('on');
@@ -577,24 +600,22 @@ function go(id, el) {
   document.getElementById('panel-' + id).classList.add('on');
 }
 
+function switchGenAITab(tab, el) {
+  document.querySelectorAll('.genai-tab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.genai-sub').forEach(s => s.classList.remove('on'));
+  document.getElementById('gsub-' + tab).classList.add('on');
+}
+
 // ─── RENDER OVERVIEW ──────────────────────────────────────────────────────
 function renderOverview() {
   document.getElementById('ovGrid').innerHTML = OVERVIEW.map(c => `
     <div class="ov-card">
-      <div class="ov-head">
-        <span>${c.name}</span>
-        <span class="ov-pricing-pill">💰 ${c.pricing}</span>
-      </div>
+      <div class="ov-head"><span>${c.name}</span><span class="ov-pricing-pill">💰 ${c.pricing}</span></div>
       <div class="ov-body">
         <div class="ov-cols">
-          <div class="wins">
-            <div class="ov-sect-head">✅ ROI Hunter does better</div>
-            ${c.wins.map(w => `<div class="ov-li">${w}</div>`).join('')}
-          </div>
-          <div class="loses">
-            <div class="ov-sect-head">👀 Be aware they have it</div>
-            ${c.loses.map(l => `<div class="ov-li">${l}</div>`).join('')}
-          </div>
+          <div class="wins"><div class="ov-sect-head">✅ ROI Hunter does better</div>${c.wins.map(w=>`<div class="ov-li">${w}</div>`).join('')}</div>
+          <div class="loses"><div class="ov-sect-head">👀 Be aware they have it</div>${c.loses.map(l=>`<div class="ov-li">${l}</div>`).join('')}</div>
         </div>
         <div class="ov-news"><div class="news-label">📰 Latest</div>${c.news}</div>
       </div>
@@ -603,128 +624,227 @@ function renderOverview() {
 
 // ─── RENDER INTEL ─────────────────────────────────────────────────────────
 function intelCard(i) {
-  return `
-    <div class="ic ${i.u}">
-      <div class="ic-top">
-        <div><div class="ic-comp">${i.c}</div><div class="ic-cat">${i.cat}</div></div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
-          ${pill(i.u)}
-          <span style="font-size:9px;color:#94a3b8;white-space:nowrap">${i.date || 'No date found'}</span>
-        </div>
+  return `<div class="ic ${i.u}">
+    <div class="ic-top">
+      <div><div class="ic-comp">${i.c}</div><div class="ic-cat">${i.cat}</div></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        ${pill(i.u)}<span style="font-size:9px;color:#94a3b8;white-space:nowrap">${i.date||'No date found'}</span>
       </div>
-      <div class="ic-body">${i.f}</div>
-      <div class="ic-src">Source: <a href="${i.url}" target="_blank">${i.src}</a></div>
-    </div>`;
-}
-
-function sectionHeader(label, count, accent) {
-  return `<div style="margin:14px 0 6px;padding:8px 12px;background:${accent};border-radius:8px;font-size:11px;font-weight:700;color:#1e293b">
-    ${label} <span style="font-weight:400;color:#64748b">(${count} item${count !== 1 ? 's' : ''})</span>
+    </div>
+    <div class="ic-body">${i.f}</div>
+    <div class="ic-src">Source: <a href="${i.url}" target="_blank">${i.src}</a></div>
   </div>`;
 }
 
-function renderIntel() {
-  const filtered = INTEL.filter(i =>
-    (intelComp === 'all' || i.c === intelComp) &&
-    (intelUrgency === 'all' || i.u === intelUrgency)
-  );
-  const thisWeek = filtered.filter(i => i.week === 'this');
-  const before   = filtered.filter(i => i.week === 'before');
+function sectionHeader(label, count, accent) {
+  return `<div style="margin:14px 0 6px;padding:8px 12px;background:${accent};border-radius:8px;font-size:11px;font-weight:700;color:#1e293b">${label} <span style="font-weight:400;color:#64748b">(${count} item${count!==1?'s':''})</span></div>`;
+}
 
+function isRecent(item) {
+  const cutoff = new Date(); cutoff.setDate(cutoff.getDate()-7); cutoff.setHours(0,0,0,0);
+  const d = new Date(item.date);
+  if (!isNaN(d.getTime()) && item.date && item.date.match(/\d{4}/)) return d >= cutoff;
+  return item.week === 'this';
+}
+
+function renderIntel() {
+  const filtered = INTEL.filter(i => (intelComp==='all'||i.c===intelComp) && (intelUrgency==='all'||i.u===intelUrgency));
+  const recent = filtered.filter(i => isRecent(i));
+  const older  = filtered.filter(i => !isRecent(i));
   let html = '';
-  if (thisWeek.length) {
-    html += sectionHeader('📅 This Week — max 7 days old', thisWeek.length, '#dcfce7');
-    html += '<div class="intel-grid">' + thisWeek.map(intelCard).join('') + '</div>';
-  }
-  if (before.length) {
-    html += sectionHeader('📂 Background & Context', before.length, '#f1f5f9');
-    html += '<div class="intel-grid">' + before.map(intelCard).join('') + '</div>';
-  }
+  if (recent.length) { html += sectionHeader('📅 This Week', recent.length, '#dcfce7'); html += '<div class="intel-grid">'+recent.map(intelCard).join('')+'</div>'; }
+  if (older.length)  { html += sectionHeader('🗂 Older than 7 days', older.length, '#f1f5f9'); html += '<div class="intel-grid">'+older.map(intelCard).join('')+'</div>'; }
   if (!html) html = '<div style="color:#94a3b8;font-size:12px;padding:20px">No findings match the current filters.</div>';
   document.getElementById('intelGrid').innerHTML = html;
 }
 
 function filterIntel(el, type, val) {
   const row = el.closest('.filters');
-  row.querySelectorAll('.chip').forEach(c => {
-    const oc = c.getAttribute('onclick') || '';
-    if (oc.includes(`'${type}'`)) c.classList.remove('on');
-  });
+  row.querySelectorAll('.chip').forEach(c => { if ((c.getAttribute('onclick')||'').includes(`'${type}'`)) c.classList.remove('on'); });
   el.classList.add('on');
-  if (type === 'comp') intelComp = val; else intelUrgency = val;
+  if (type==='comp') intelComp=val; else intelUrgency=val;
   renderIntel();
 }
 
 // ─── RENDER MATRIX ────────────────────────────────────────────────────────
 function renderMatrix() {
   const wrap = document.getElementById('matrixWrap');
-  const filtered = matrixSections.filter(s => activeCat === 'all' || s.cat === activeCat);
-  if (!filtered.length) {
-    wrap.innerHTML = '<div style="color:#94a3b8;font-size:12px;padding:20px">No data.</div>';
-    return;
-  }
-
-  let html = `<table><thead><tr>
-    <th>Feature / Capability</th>
-    <th>ROI Hunter</th><th>Hunch</th><th>Smartly</th>
-    <th>Marpipe</th><th>Confect.io</th><th>AdSamurai</th>
-  </tr></thead><tbody>`;
-
+  const filtered = matrixSections.filter(s => activeCat==='all' || s.cat===activeCat);
+  if (!filtered.length) { wrap.innerHTML='<div style="color:#94a3b8;font-size:12px;padding:20px">No data.</div>'; return; }
+  let html = `<table><thead><tr><th>Feature / Capability</th><th>ROI Hunter</th><th>Hunch</th><th>Smartly</th><th>Marpipe</th><th>Confect.io</th><th>AdSamurai</th></tr></thead><tbody>`;
   for (const sec of filtered) {
     html += `<tr class="cat-row"><td colspan="7">${sec.name}</td></tr>`;
     for (const r of sec.rows) {
-      // Feature name: support | as a sub-text separator (e.g. "Feature|sub-note")
       const fParts = r.f.split('|');
-      const fHtml = fParts.length > 1
-        ? `${fParts[0]}<br><span style="font-size:10px;color:#94a3b8">${fParts.slice(1).join(' ')}</span>`
-        : r.f;
-      html += `<tr>
-        <td>${fHtml}</td>
-        <td>${badge(r.rh, r._src.rh)}</td>
-        <td>${badge(r.hu, r._src.hu)}</td>
-        <td>${badge(r.sm, r._src.sm)}</td>
-        <td>${badge(r.ma, r._src.ma)}</td>
-        <td>${badge(r.co, r._src.co)}</td>
-        <td>${badge(r.ad, r._src.ad)}</td>
-      </tr>`;
+      const fHtml = fParts.length>1 ? `${fParts[0]}<br><span style="font-size:10px;color:#94a3b8">${fParts.slice(1).join(' ')}</span>` : r.f;
+      html += `<tr><td>${fHtml}</td><td>${badge(r.rh,r._src.rh)}</td><td>${badge(r.hu,r._src.hu)}</td><td>${badge(r.sm,r._src.sm)}</td><td>${badge(r.ma,r._src.ma)}</td><td>${badge(r.co,r._src.co)}</td><td>${badge(r.ad,r._src.ad)}</td></tr>`;
     }
   }
-
-  html += '</tbody></table>';
-  html += `<div style="margin-top:10px;font-size:10px;color:#64748b;">
-    <strong>Legend:</strong>
-    <span class="b bT"  style="margin:0 4px">TRUE</span> Fully supported &nbsp;
-    <span class="b bYB" style="margin:0 4px">YES,BUT</span> Partial / caveats &nbsp;
-    <span class="b bNB" style="margin:0 4px">NO,BUT</span> Workaround exists &nbsp;
-    <span class="b bN"  style="margin:0 4px">NO</span> Not supported &nbsp;
-    <span class="b bQ"  style="margin:0 4px">?</span> Unverified &nbsp;
-    <span style="color:#2563eb">·</span> Underlined badges link to source evidence
-  </div>`;
-
+  html += `</tbody></table><div style="margin-top:10px;font-size:10px;color:#64748b;"><strong>Legend:</strong> <span class="b bT" style="margin:0 4px">TRUE</span> Fully supported &nbsp;<span class="b bYB" style="margin:0 4px">YES,BUT</span> Partial / caveats &nbsp;<span class="b bNB" style="margin:0 4px">NO,BUT</span> Workaround exists &nbsp;<span class="b bN" style="margin:0 4px">NO</span> Not supported &nbsp;<span class="b bQ" style="margin:0 4px">?</span> Unverified &nbsp;<span style="color:#2563eb">·</span> Underlined badges link to source evidence</div>`;
   wrap.innerHTML = html;
 }
 
 function filterMatrix(el, cat) {
   document.querySelectorAll('#matrixCatChips .chip').forEach(c => c.classList.remove('on'));
-  el.classList.add('on');
-  activeCat = cat;
-  renderMatrix();
+  el.classList.add('on'); activeCat = cat; renderMatrix();
 }
 
 // ─── RENDER SOURCES ───────────────────────────────────────────────────────
 function renderSources() {
   document.getElementById('srcGrid').innerHTML = SOURCES.map(s => `
-    <div class="src-card">
-      <div class="src-head">${s.name}</div>
-      ${s.items.map(i => `
-        <div class="src-row">
-          <span class="${i.must ? 'must' : 'gen'}">${i.must ? 'MUST' : 'Gen'}</span>
-          <div class="src-link">
-            <a href="${i.url}" target="_blank">${i.label}</a>
-            <span class="src-desc">${i.desc}</span>
-          </div>
-        </div>`).join('')}
+    <div class="src-card"><div class="src-head">${s.name}</div>
+    ${s.items.map(i=>`<div class="src-row"><span class="${i.must?'must':'gen'}">${i.must?'MUST':'Gen'}</span><div class="src-link"><a href="${i.url}" target="_blank">${i.label}</a><span class="src-desc">${i.desc}</span></div></div>`).join('')}
     </div>`).join('');
+}
+
+// ─── RENDER GENAI MATRIX ──────────────────────────────────────────────────
+const GM_COLS = [
+  { k: 'Background Removal',                                                 l: 'BG Removal' },
+  { k: 'Shadow Generation',                                                  l: 'Shadow Gen' },
+  { k: 'Scene / Lifestyle Bg Generation',                                    l: 'Scene Gen' },
+  { k: 'Visual Search (within own catalog/feed)',                            l: 'Visual Search' },
+  { k: 'Granular Filters for Visual Search',                                 l: 'Visual Filters' },
+  { k: 'Dynamic Ad Integration (Meta/TikTok/Snap)',                          l: 'DPA' },
+  { k: 'Fashion / Model Imagery',                                            l: 'Fashion/Model' },
+  { k: 'AI Product Video (image-to-video generation, not templates)',        l: 'AI Video' },
+  { k: 'Free Tier',                                                          l: 'Free Tier' },
+  { k: 'Licensed Training Data / Indemnification',                           l: 'IP Indemnify' },
+];
+
+function renderGenAIMatrix() {
+  if (!GENAI_MATRIX.length) return;
+  let html = `<table class="gm-table"><thead><tr>
+    <th>Vendor</th>${GM_COLS.map(c=>`<th>${c.l}</th>`).join('')}<th style="text-align:left;min-width:180px">Key differentiator</th>
+  </tr></thead><tbody>`;
+  for (const v of GENAI_MATRIX) {
+    const isRH = (v['Vendor']||'').includes('ROI HUNTER');
+    const name = (v['Vendor']||'').replace('⭐ ','');
+    const src  = v['Source']||'';
+    const srcLink = src ? ` <a href="${src}" target="_blank" style="font-size:10px;color:#3b82f6;text-decoration:none">↗</a>` : '';
+    html += `<tr${isRH?' class="gm-rh-row"':''}>
+      <td>${isRH?'⭐ ':''}${name}${srcLink}</td>
+      ${GM_COLS.map(c=>`<td>${gBadge(v[c.k])}</td>`).join('')}
+      <td class="gm-diff">${v['Key Differentiator / Positioning']||''}</td>
+    </tr>`;
+  }
+  html += `</tbody></table><div style="margin-top:10px;font-size:10px;color:#64748b;">
+    <span class="bGY">Yes</span> Supported &nbsp;
+    <span class="bGN">No</span> Not supported &nbsp;
+    <span class="bGP">Partial</span> Partial/caveats &nbsp;
+    <span class="bGQ">?</span> See tooltip &nbsp;·&nbsp; ⭐ = ROI Hunter (our offering)</div>`;
+  document.getElementById('gmWrap').innerHTML = html;
+}
+
+// ─── RENDER GENAI PRICING ─────────────────────────────────────────────────
+function renderGenAIPricing() {
+  if (!GENAI_PRICING.length) return;
+  document.getElementById('gpGrid').innerHTML = GENAI_PRICING.map((v, idx) => {
+    const isRH = (v['Vendor']||'').includes('ROI HUNTER');
+    const name = (v['Vendor']||'').replace('⭐ ','');
+    return `<div class="gp-card${isRH?' gp-rh':''}" onclick="openGPPopup(${idx})">
+      <div class="gp-name"><span>${isRH?'⭐ ':''}${name}</span><span class="gp-hint">details →</span></div>
+      <div class="gp-row"><span class="gp-tier">30K renders / yr</span><span class="gp-val">${v['Annual Cost @ 30K renders']||'—'}</span></div>
+      <div class="gp-row"><span class="gp-tier">150K renders / yr</span><span class="gp-val">${v['Annual Cost @ 150K renders']||'—'}</span></div>
+      <div class="gp-row"><span class="gp-tier">500K renders / yr</span><span class="gp-val">${v['Annual Cost @ 500K renders']||'—'}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function openGPPopup(idx) {
+  const v = GENAI_PRICING[idx];
+  if (!v) return;
+  const name = (v['Vendor']||'').replace('⭐ ','');
+  document.getElementById('gpPopupTitle').textContent = name + ' — Pricing detail';
+  const groups = [
+    { sect: 'Billing', rows: [['Billing model', v['Billing Model']], ['Scope per unit', v['Scope (what 1 unit covers)']], ['Unit price', v['Unit Price']], ['Transparency', v['Pricing Transparency']]] },
+    { sect: 'Annual cost at volume', rows: [['30K renders / yr', v['Annual Cost @ 30K renders']], ['150K renders / yr', v['Annual Cost @ 150K renders']], ['500K renders / yr', v['Annual Cost @ 500K renders']], ['1M renders / yr', v['Annual Cost @ 1M renders']]] },
+  ];
+  let html = '';
+  for (const g of groups) {
+    html += `<div class="gp-popup-sect">${g.sect}</div>`;
+    for (const [label, val] of g.rows) {
+      if (!val) continue;
+      html += `<div class="gp-popup-row"><span class="gp-popup-label">${label}</span><span class="gp-popup-val">${val}</span></div>`;
+    }
+  }
+  if (v['Notes'])  html += `<div class="gp-popup-note">${v['Notes']}</div>`;
+  if (v['Source']) html += `<div class="gp-popup-src">Source: <a href="${v['Source']}" target="_blank">${v['Source']}</a></div>`;
+  document.getElementById('gpPopupBody').innerHTML = html;
+  document.getElementById('gpOverlay').classList.add('open');
+}
+
+function closeGPPopup() { document.getElementById('gpOverlay').classList.remove('open'); }
+
+// ─── RENDER GENAI DEAL INTEL ──────────────────────────────────────────────
+function filterGDI(el, type, val) {
+  const row = el.closest('.filters');
+  row.querySelectorAll('.chip').forEach(c => { if ((c.getAttribute('onclick')||'').includes(`'${type}'`)) c.classList.remove('on'); });
+  el.classList.add('on');
+  if (type==='status') gdiStatus=val; else if (type==='region') gdiRegion=val;
+  renderGenAIIntel();
+}
+
+function renderGenAIIntel() {
+  const filtered = GENAI_INTEL.filter(r => {
+    const statusMatch = gdiStatus==='all' || (r['Deal Status']||'')===gdiStatus;
+    const regionMatch = gdiRegion==='all' || (r['Region']||'')===gdiRegion;
+    return statusMatch && regionMatch;
+  });
+  if (!filtered.length) {
+    document.getElementById('gdiGrid').innerHTML = '<div style="color:#94a3b8;font-size:12px;padding:20px">No deals match the current filters.</div>';
+    return;
+  }
+  const statusSlug = { 'Active':'active', 'Closed Won':'won', 'Closed Lost':'lost', 'Paused':'paused' };
+  document.getElementById('gdiGrid').innerHTML = filtered.map(r => {
+    const status  = r['Deal Status']||'';
+    const slug    = statusSlug[status]||'';
+    const mrr     = r['MRR (€)']||'';
+    const mrrNum  = parseInt(mrr.replace(/[^0-9]/g,''),10)||0;
+    const mrrCls  = mrrNum>=10000?'high':mrrNum>=3000?'med':'';
+    const mrrTxt  = mrr && mrr!=='TBD' ? `€${mrr} MRR` : (mrr||'—');
+    const comp    = r['Competitor Mentioned']||'';
+    const ss      = r['Self-serve Objection?']==='Yes';
+    const quote   = r['Key Quote']||'';
+    const signal  = r['GenAI Objection or Signal']||'';
+    const action  = r['Takeaway / Action']||'';
+    return `<div class="gdi-card${slug?' gdi-'+slug:''}">
+      <div class="gdi-top">
+        <div><div class="gdi-name">${r['Company']||''}</div><div class="gdi-meta">${r['Region']||''}${r['Region']&&status?' · ':''}${status}</div></div>
+        <div class="gdi-mrr ${mrrCls}">${mrrTxt}</div>
+      </div>
+      <div class="gdi-pills">
+        ${slug?`<span class="gdi-pill ${slug}">${status}</span>`:''}
+        ${comp?`<span class="gdi-pill comp">vs ${comp}</span>`:''}
+        ${ss?'<span class="gdi-pill ss">Self-serve Q</span>':''}
+      </div>
+      ${signal?`<div class="gdi-signal">${signal}</div>`:''}
+      ${quote?`<div class="gdi-quote">${quote}</div>`:''}
+      ${action?`<div class="gdi-action"><div class="gdi-action-label">Action</div>${action}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ─── RENDER GENAI BATTLECARD ──────────────────────────────────────────────
+function renderGenAIBattlecard() {
+  if (!GENAI_BATTLECARD.length) return;
+  const COMP_COLS = ['Smartly', 'Hunch', 'Marpipe', 'Meta Native GenAI', 'Claid / Photoroom'];
+  const colCount  = 2 + COMP_COLS.length;
+  let html = `<table class="gbc-table"><thead><tr>
+    <th>Dimension</th><th class="gbc-rh">⭐ ROI Hunter</th>
+    ${COMP_COLS.map(c=>`<th>${c}</th>`).join('')}
+  </tr></thead><tbody>`;
+  for (const row of GENAI_BATTLECARD) {
+    const dim = (row['Dimension']||'').trim();
+    if (!dim || dim.startsWith('*')) continue;
+    if (dim.includes('──')) {
+      const label = dim.replace(/─+/g,'').trim();
+      html += `<tr class="gbc-section"><td colspan="${colCount}">${label}</td></tr>`;
+    } else {
+      html += `<tr><td>${dim}</td><td class="gbc-rh-cell">${(row['ROI HUNTER']||'').replace(/\n/g,' ')}</td>${COMP_COLS.map(c=>`<td>${(row[c]||'').replace(/\n/g,' ')}</td>`).join('')}</tr>`;
+    }
+  }
+  html += '</tbody></table>';
+  document.getElementById('gbcWrap').innerHTML = html;
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────
