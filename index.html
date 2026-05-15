@@ -714,56 +714,46 @@ const GM_COLS = [
 
 function renderGenAIMatrix() {
   if (!GENAI_MATRIX.length) return;
-  const colCount = GM_COLS.length + 2; // Vendor + features + Key Differentiator
 
-  // Separate ROI Hunter from the rest; group rest by Category
-  const rh = GENAI_MATRIX.filter(v => (v['Vendor']||'').includes('ROI HUNTER'));
-  const others = GENAI_MATRIX.filter(v => !(v['Vendor']||'').includes('ROI HUNTER'));
+  // Build ordered vendor list: ROI Hunter first, then by category
   const catOrder = ['Retail Image Studio','Ad Activation Platform','Visual Search / DAM','Raw Model / API','Point Solution'];
-  const groups = {};
-  for (const v of others) {
-    const cat = (v['Category']||'').replace(/\n/g,' ').trim() || 'Other';
-    if (!groups[cat]) groups[cat] = [];
-    groups[cat].push(v);
-  }
+  const rh     = GENAI_MATRIX.filter(v =>  (v['Vendor']||'').includes('ROI HUNTER'));
+  const others = GENAI_MATRIX.filter(v => !(v['Vendor']||'').includes('ROI HUNTER'));
+  others.sort((a, b) => {
+    const ai = catOrder.indexOf((a['Category']||'').replace(/\n/g,' ').trim());
+    const bi = catOrder.indexOf((b['Category']||'').replace(/\n/g,' ').trim());
+    return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi);
+  });
+  const vendors = [...rh, ...others];
 
-  function vendorRow(v, extra='') {
-    const name = (v['Vendor']||'').replace('⭐ ','').replace(/\n/g,' ').trim();
+  function vName(v) { return (v['Vendor']||'').replace('⭐ ','').replace(/\n/g,' ').trim(); }
+
+  // Header row — one column per vendor
+  const thCells = vendors.map(v => {
+    const isRH  = (v['Vendor']||'').includes('ROI HUNTER');
+    const name  = vName(v);
     const srcRaw = (v['Source']||'').trim();
-    const src    = srcRaw && !srcRaw.startsWith('http') ? 'https://' + srcRaw : srcRaw;
-    const srcLink = src ? ` <a href="${src}" target="_blank" style="font-size:10px;color:#3b82f6;text-decoration:none">↗</a>` : '';
-    const diff = (v['Key Differentiator / Positioning']||'').replace(/\n/g,' ');
-    return `<tr${extra}>
-      <td>${name}${srcLink}</td>
-      ${GM_COLS.map(c=>`<td style="text-align:center">${gBadge(v[c.k])}</td>`).join('')}
-      <td style="font-size:10px;color:#475569;line-height:1.4;max-width:200px">${diff}</td>
+    const src   = srcRaw && !srcRaw.startsWith('http') ? 'https://' + srcRaw : srcRaw;
+    const link  = src ? ` <a href="${src}" target="_blank" style="font-size:9px;color:${isRH?'#93c5fd':'#3b82f6'};text-decoration:none">↗</a>` : '';
+    return `<th style="text-align:center;min-width:100px;line-height:1.3${isRH?';background:#1e3a5f':''}">${isRH?'⭐ ':''}${name}${link}</th>`;
+  }).join('');
+
+  let html = `<table style="min-width:${vendors.length * 105 + 160}px">
+    <thead><tr>
+      <th style="text-align:left;min-width:180px;position:sticky;left:0;z-index:3">Feature / Capability</th>
+      ${thCells}
+    </tr></thead><tbody>`;
+
+  // One row per feature
+  for (const col of GM_COLS) {
+    const cells = vendors.map(v => {
+      const isRH = (v['Vendor']||'').includes('ROI HUNTER');
+      return `<td style="text-align:center${isRH?';background:#f0f6ff':''}">${gBadge(v[col.k])}</td>`;
+    }).join('');
+    html += `<tr>
+      <td style="font-weight:500;font-size:12px;color:#1e293b;position:sticky;left:0;background:#fff;z-index:1;border-right:1px solid #e4eaf6">${col.l}</td>
+      ${cells}
     </tr>`;
-  }
-
-  let html = `<table style="min-width:900px"><thead><tr>
-    <th style="min-width:160px;position:sticky;left:0;z-index:3">Vendor</th>
-    ${GM_COLS.map(c=>`<th style="text-align:center;min-width:90px;line-height:1.3">${c.l}</th>`).join('')}
-    <th style="text-align:left;min-width:190px">Key Differentiator</th>
-  </tr></thead><tbody>`;
-
-  // ROI Hunter — pinned at top with its own section header
-  if (rh.length) {
-    html += `<tr class="cat-row"><td colspan="${colCount}">⭐ Our Offering</td></tr>`;
-    for (const v of rh) html += vendorRow(v, ' class="gm-rh-row"');
-  }
-
-  // Competitors — grouped by category
-  for (const cat of catOrder) {
-    const rows = groups[cat];
-    if (!rows || !rows.length) continue;
-    html += `<tr class="cat-row"><td colspan="${colCount}">${cat}</td></tr>`;
-    for (const v of rows) html += vendorRow(v);
-  }
-  // Any category not in catOrder
-  for (const [cat, rows] of Object.entries(groups)) {
-    if (catOrder.includes(cat)) continue;
-    html += `<tr class="cat-row"><td colspan="${colCount}">${cat}</td></tr>`;
-    for (const v of rows) html += vendorRow(v);
   }
 
   html += `</tbody></table>
@@ -809,7 +799,7 @@ function openGPPopup(idx) {
     }
   }
   if (v['Notes'])  html += `<div class="gp-popup-note">${v['Notes']}</div>`;
-  if (v['Source']) html += `<div class="gp-popup-src">Source: <a href="${v['Source']}" target="_blank">${v['Source']}</a></div>`;
+  if (v['Source']) { const sr = v['Source'].trim(); const sh = sr && !sr.startsWith('http') ? 'https://'+sr : sr; html += `<div class="gp-popup-src">Source: <a href="${sh}" target="_blank">${sr}</a></div>`; }
   document.getElementById('gpPopupBody').innerHTML = html;
   document.getElementById('gpOverlay').classList.add('open');
 }
