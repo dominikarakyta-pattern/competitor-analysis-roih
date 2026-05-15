@@ -149,6 +149,8 @@ td:not(:first-child) { text-align: center; }
 .gm-table tbody tr:not(.gm-rh-row):hover td:first-child { background: #f8fafc; }
 tr.gm-rh-row td { background: #f0f6ff !important; }
 tr.gm-rh-row td:first-child { color: #0d1929; font-weight: 700; }
+tr.gm-keydiff td { background: #fff !important; color: #1e293b !important; font-weight: 400 !important; font-size: 10px; line-height: 1.5; vertical-align: top; border-top: 2px solid #e4eaf6; }
+tr.gm-keydiff td:first-child { font-weight: 600 !important; font-size: 11px; }
 .bGY { background: #dcfce7; color: #15803d; display: inline-block; border-radius: 4px; font-size: 10px; font-weight: 700; padding: 2px 8px; }
 .bGN { background: #f1f5f9; color: #94a3b8; display: inline-block; border-radius: 4px; font-size: 10px; font-weight: 700; padding: 2px 8px; }
 .bGP { background: #fef3c7; color: #92400e; display: inline-block; border-radius: 4px; font-size: 10px; font-weight: 700; padding: 2px 8px; }
@@ -756,12 +758,11 @@ function renderGenAIMatrix() {
   // Key Differentiator — always last, separated by a top border
   if (hasKeyDiff) {
     const diffCells = vendors.map(v => {
-      const isRH = (v['Vendor']||'').includes('ROI HUNTER');
       const diff = (v[GM_KEY_DIFF]||'').replace(/\n/g,' ').trim();
-      return `<td style="font-size:10px;color:#1e293b;line-height:1.5;vertical-align:top;background:#fff;font-weight:400">${diff||'—'}</td>`;
+      return `<td>${diff||'—'}</td>`;
     }).join('');
-    html += `<tr>
-      <td style="font-weight:600;font-size:11px;color:#1e293b;position:sticky;left:0;background:#fff;z-index:1;border-right:1px solid #e4eaf6;border-top:2px solid #e4eaf6;vertical-align:top">Key Differentiator</td>
+    html += `<tr class="gm-keydiff">
+      <td style="position:sticky;left:0;z-index:1;border-right:1px solid #e4eaf6">Key Differentiator</td>
       ${diffCells}
     </tr>`;
   }
