@@ -579,8 +579,8 @@ function gBadge(v) {
   if (u.startsWith('NO')  || u === 'FALSE') return '<span class="bGN">No</span>';
   if (u.startsWith('PARTIAL'))              return '<span class="bGP">Partial</span>';
   if (!raw || u === 'UNKNOWN' || u === '?') return '<span class="bGQ">?</span>';
-  const display = raw.split('\n')[0].slice(0, 18);
-  return `<span class="bGQ" title="${raw.replace(/"/g,'&quot;').replace(/\n/g,' ')}">${display}${raw.length > 18 ? '…' : ''}</span>`;
+  const display = raw.split('\n')[0];
+  return `<span class="bGQ" title="${raw.replace(/"/g,'&quot;').replace(/\n/g,' ')}">${display}</span>`;
 }
 
 function pill(u) {
